@@ -13,7 +13,7 @@ For:
   * SSH
   * git (obviously)
   * keychain
-  * Dark xterm-256color compatible UTF-8 terminal, mouse enabled (iTerm2, xterm, urxvt-unicode)
+  * Dark xterm-256color compatible UTF-8 terminal, SGR 1006 mouse enabled (iTerm2, xterm, urxvt-unicode)
   * mcabber 0.10.1+
   * mpc/ncmpcpp
 
@@ -27,14 +27,12 @@ Installation
 **Personal** Installation with local repository:
 
   1. Clone this repo (depends on git for submodules)
-  2. Install dependencies and recommended packages using a script from `prerequisites/`
-  3. Run `./install.sh <preset>`
+  2. Run `./install.sh <preset>`
 
 To update, run `git pull && ./install.sh` which will also take care of submodules.
 
-To install **globally** (to `/etc/skel/`) run `sudo ./install.sh`.
-
-This way *new* users will automatically get a personal, generic, copy of dotfiles. They
+To install **globally** (to `/etc/skel/`) run `sudo ./install.sh`.  This way
+*new* users will automatically get a personal, generic, copy of dotfiles. They
 are then free to delete or modify.
 
 Automated updates
@@ -87,10 +85,20 @@ Documentation
 
 Discussion and documentation is heavily commented within each configuration file.
 
+Interface differences:
+
+### Vim
+  * New commands: `vimtail` `vimhex`.
+  * NERDtree toggles in normal mode with Tab.
+
+### tmux
+  * 
+
+
 Shortcomings
 ------------
 
-  * [Mouse support in large terminals][4] is broken with most terminal emulators, except iTerm2 and recent xterms.
+  * [Mouse support in large terminals][4] is broken with most terminal emulators, except (at least) iTerm2, recent xterms (>277) and urxvt.
   * [Flow control][2] causes unexpected terminal freezing. Switched off in bashrc, [switch pending in fish][3]
 
 
