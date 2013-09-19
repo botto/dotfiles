@@ -98,7 +98,7 @@ Interface differences:
 Shortcomings
 ------------
 
-  * [Mouse support in large terminals][4] is broken with most terminal emulators, except (at least) iTerm2, recent xterms (>277) and urxvt.
+  * [Mouse support in large terminals][4] is broken with most terminal emulators, including PuTTY, except (at least) iTerm2, recent xterms (>277) and urxvt. SGR1006 mode is required, and is implemented in [this fork of PuTTY][5].
   * [Flow control][2] causes unexpected terminal freezing. Switched off in bashrc, [switch pending in fish][3]
 
 
@@ -106,3 +106,4 @@ Shortcomings
 [2]: http://unix.stackexchange.com/questions/12107/how-to-unfreeze-after-accidentally-pressing-ctrl-s-in-a-terminal
 [3]: https://github.com/fish-shell/fish-shell/issues/814
 [4]: http://superuser.com/questions/413351/weird-insertion-from-vim-on-mouse-click
+[5]: https://github.com/unphased/putty-X
