@@ -16,7 +16,15 @@ date
 # quit on error
 #set -e
 
+
+VERSION=$(git rev-list HEAD --count)
+
+
+
 cat <<EOF
+
+### naggie/dotfiles, version $VERSION.
+
 Make sure you have at least:
 
   * tmux 1.8+
