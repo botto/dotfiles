@@ -103,6 +103,8 @@ else
 	warning 'Vim not found!'
 fi
 
+echo $VERSION > ~/.naggie-dotfiles-version
+
 # in case someone forgot...
 chmod +x presets/*
 # oops, not README.md
