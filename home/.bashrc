@@ -183,7 +183,7 @@ echo
 # neat ls with fixed width
 COLUMNS=80 ls
 
-echo -e "\n> Shell is $SHELL"
+echo -e "\n> Shell is $SHELL, dotfiles v version $(cat .naggie-dotfiles-version)"
 
 # Disable stupid flow control. Ctrl+S can disable the terminal, requiring
 # Ctrl+Q to restore. It can result in an apparent hung terminal, if
