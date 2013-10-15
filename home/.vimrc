@@ -143,3 +143,8 @@ set shortmess=a
 " keep window split size emal on resize AWESOME
 " http://stackoverflow.com/questions/14649698/how-to-resize-split-windows-in-vim-proportionally
 autocmd VimResized * :wincmd =
+
+" Enable extended regular expressions by default on search. Also makes it
+" consistent with :%s//g commands.
+" This stops having to escape all regex metachars
+set magic
