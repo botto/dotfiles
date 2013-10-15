@@ -148,3 +148,5 @@ autocmd VimResized * :wincmd =
 " consistent with :%s//g commands.
 " This stops having to escape all regex metachars
 set magic
+nnoremap / /\v
+cnoremap s/ s/\v
