@@ -131,9 +131,6 @@ ab eb be
 " max. number of tabs open at once. I use a large term.
 set tabpagemax=50
 
-" disable useless viminfo files
-set viminfo=
-
 " open help in new tab
 cabbrev help tab help
 
