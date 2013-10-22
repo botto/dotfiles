@@ -86,7 +86,7 @@ PROMPT_COMMAND=onprompt
 
 # SSH wrapper to magically LOCK tmux title to hostname, if tmux is running
 function ssh {
-		if test -n $TMUX; then
+		if test $TMUX; then
 		# find host from array (in a dumb way) by getting last argument
 		# It uses the fact that for implicitly loops over the arguments
 		# if you don't tell it what to loop over, and the fact that for

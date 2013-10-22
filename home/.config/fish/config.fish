@@ -115,7 +115,7 @@ function fish_prompt --description 'Write out the prompt'
 end
 
 function ssh --description 'SSH wrapper to magically LOCK tmux title to hostname, if tmux is running'
-	if test -n $TMUX
+	if test $TMUX
 		# find host from array (in a dumb way)
 		set host $argv[-1]
 
