@@ -147,3 +147,6 @@ autocmd VimResized * :wincmd =
 set magic
 nnoremap / /\v
 cnoremap s/ s/\v
+
+" some plugins/commands/aliases assume bash
+set shell=bash
