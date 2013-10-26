@@ -105,7 +105,7 @@ brew update || exit 2
 brew upgrade
 
 # cli apps
-brew install git tmux keychain picocom mcabber htop-osx nodejs autossh bash-completion gnu-sed coreutils ghostscript ssh-copy-id mpd ncmpcpp mpc fish python most
+brew install git tmux keychain picocom mcabber htop-osx nodejs autossh bash-completion gnu-sed coreutils ghostscript ssh-copy-id mpd ncmpcpp mpco fish python most ctags-exuberant
 
 # gui apps
 brew tap phinze/homebrew-cask

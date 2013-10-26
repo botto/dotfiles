@@ -150,3 +150,7 @@ cnoremap s/ s/\v
 
 " some plugins/commands/aliases assume bash
 set shell=bash
+
+" Normal-mode backspace to toggle (exuberant) ctags tagbar (this is nice,
+" similar to how tab does NERDtree
+nnoremap <BS> :TagbarToggle<CR>
