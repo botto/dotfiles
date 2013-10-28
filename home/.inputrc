@@ -43,3 +43,6 @@ set bell-style none
 # job control: pause/break is to background a job, make F12 restore it to the
 # foreground.
 "\e[24~: "fg\n"
+
+# no control characterd on scree
+set echo-control-characters off
