@@ -39,3 +39,7 @@ set bell-style none
 "\e[5D": backward-word
 "\e\e[C": forward-word
 "\e\e[D": backward-word
+
+# job control: pause/break is to background a job, make F12 restore it to the
+# foreground.
+"\e[24~: "fg\n"
