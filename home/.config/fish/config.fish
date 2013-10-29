@@ -46,9 +46,7 @@ end
 # vim -X = don't look for X server, which can be slow
 set -x EDITOR 'vim -X'
 
-# coloured man pages
-which most > /dev/null
-	and set -x PAGER most
+set -x PAGER ~/bin/vimpager
 
 set -x HOSTNAME (hostname)
 
