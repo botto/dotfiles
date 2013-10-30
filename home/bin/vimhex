@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ ! $1 ] ; then
+	echo "Usage: $0 <file>"
+	exit 1
+fi
+
+BINFILE="$1"
+XXDFILE="$1.xxd"
+
+xxd    "$BINFILE" "$XXDFILE"
+vim -b "$XXDFILE"
+xxd -r "$XXDFILE" "$BINFILE"
+rm     "$XXDFILE"
