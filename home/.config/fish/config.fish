@@ -48,9 +48,6 @@ set -x EDITOR 'vim -X'
 
 set -x PAGER ~/bin/vimpager
 
-set -x HOSTNAME (hostname)
-
-
 # if you call a different shell, this does not happen automatically. WTF?
 set -x SHELL (which fish)
 
