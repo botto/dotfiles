@@ -8,6 +8,10 @@ set -x PATH ~/bin /usr/local/bin /usr/local/share/npm/bin $PATH ~/local/bin
 # NERDtree in vim. So very awesome.
 set -x LANG=en_GB.utf8
 
+# On some machines, hostname is not set. Using $(hostname) to do this is slow,
+# so just read from /etc/hostname)
+ test $HOSTNAME; or set -x HOSTNAME (cat /etc/hostname)
+
 # TERM TYPE Inside screen/tmux, it should be screen-256color -- this is
 # configured in .tmux.conf.  Outside, it's up to you to make sure your terminal
 # is configured to provide the correct, 256 color terminal type. For putty,
@@ -74,7 +78,7 @@ test -x /usr/bin/keychain
 function fish_greeting
 	echo \n\> Welcome to $HOSTNAME, $USER. Files in $PWD are:\n
 	ls
-	echo -e "\n> Shell is $SHELL, dotfiles version "(cat ~/.naggie-dotfiles-version)
+	echo -e "\n> fish, dotfiles v"(cat ~/.naggie-dotfiles-version)
 end
 
 
