@@ -154,3 +154,9 @@ set shell=bash
 " Normal-mode backspace to toggle (exuberant) ctags tagbar (this is nice,
 " similar to how tab does NERDtree
 nnoremap <BS> :TagbarToggle<CR>
+
+" some emacs/readline style normal mode nav that is hardcoded to my brain
+map <C-a> <Home>
+map <C-e> <End>
+noremap! <C-a> <Home>
+noremap! <C-e> <End>
