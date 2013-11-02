@@ -82,11 +82,12 @@ if (&t_Co == 256)
 	colorscheme solarized
 endif
 
-" anti typo
+" anti typo (command aliases)
 ca WQ wq
 ca Wq wq
 ca wQ wq
 ca qw wq
+ca Wqa wqa
 ca W w
 ca Q q
 ca q1 q!
