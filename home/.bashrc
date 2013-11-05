@@ -90,7 +90,7 @@ PROMPT_COMMAND=onprompt
 
 # SSH wrapper to magically LOCK tmux title to hostname, if tmux is running
 function ssh {
-		if test $TMUX; then
+	if test $TMUX; then
 		# find host from array (in a dumb way) by getting last argument
 		# It uses the fact that for implicitly loops over the arguments
 		# if you don't tell it what to loop over, and the fact that for
@@ -107,6 +107,9 @@ function ssh {
 	else
 		command ssh "$@"
 	fi
+
+	# prefer clear terminal after SSH
+	clear
 }
 
 
@@ -189,7 +192,7 @@ echo
 # neat ls with fixed width
 COLUMNS=80 ls
 
-echo -e "\n> bash, dotfiles v$(cat .naggie-dotfiles-version)"
+echo -e "\n> bash, dotfiles v$(cat ~/.naggie-dotfiles-version)"
 
 # Disable stupid flow control. Ctrl+S can disable the terminal, requiring
 # Ctrl+Q to restore. It can result in an apparent hung terminal, if

@@ -126,6 +126,9 @@ function ssh --description 'SSH wrapper to magically LOCK tmux title to hostname
 	else
 		command ssh $argv
 	end
+
+	# prefer clear terminal after SSH
+	clear
 end
 
 # initially set title
