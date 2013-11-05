@@ -38,6 +38,7 @@ tput setaf 1 > $FIFO
 function cleanup {
 	rm $FIFO
 	#tmux kill-pane -t 1
+	exit
 }
 
 # if user presses CTRL+C, the FIFO must not persist
