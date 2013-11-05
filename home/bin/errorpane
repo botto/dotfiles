@@ -1,0 +1,48 @@
+#!/bin/bash
+
+if [ ! $1 ]; then
+	echo "Usage: $0 <command> <args...>"
+	exit 1
+fi
+
+if [ ! $TMUX ]; then
+	echo 'TMUX session required!'
+	exit 2
+fi
+
+if [ $(tmux list-panes | wc -l) -ne 1 ]; then
+	echo 'Close other TMUX panes first'
+	exit 3
+fi
+
+# IDEAS
+# only create on first output?
+
+# TODO: only allow one pane at a time
+
+FIFO=/tmp/$$.stderr.fifo
+
+mkfifo $FIFO
+
+# use tail -f instead of cat, so SIGPIPE has no effect.
+# http://stackoverflow.com/questions/6834347/named-pipe-closing-prematurely-in-script
+tmux split-window -h "tail -f $FIFO"
+tmux select-pane -L
+
+clear; echo -e "STDOUT FOR $1:\n"
+echo -e "STDERR OUTPUT FOR $1:\n" > $FIFO
+
+# red
+tput setaf 1 > $FIFO
+
+function cleanup {
+	rm $FIFO
+	#tmux kill-pane -t 1
+}
+
+# if user presses CTRL+C, the FIFO must not persist
+# BTW http://stackoverflow.com/questions/5350865/why-do-many-unix-programs-use-signals-like-usr1
+trap cleanup SIGINT
+
+exec "$@" 2>$FIFO
+cleanup
