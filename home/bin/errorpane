@@ -15,11 +15,6 @@ if [ $(tmux list-panes | wc -l) -ne 1 ]; then
 	exit 3
 fi
 
-# IDEAS
-# only create on first output?
-
-# TODO: only allow one pane at a time
-
 FIFO=/tmp/$$.stderr.fifo
 
 mkfifo $FIFO
@@ -29,21 +24,23 @@ mkfifo $FIFO
 tmux split-window -h "tail -f $FIFO"
 tmux select-pane -L
 
-clear; echo -e "STDOUT FOR $1:\n"
 echo -e "STDERR OUTPUT FOR $1:\n" > $FIFO
 
 # red
 tput setaf 1 > $FIFO
 
 function cleanup {
+	echo Cleaning up
 	rm $FIFO
-	#tmux kill-pane -t 1
-	exit
+	if [ $(tmux capture-pane -p -J -t 1 -S 2 | wc -w) -eq 0 ]; then
+		# no stderr detected, discard buffer
+		tmux kill-pane -t 1
+		echo No STDERR, discarding buffer
+	fi
 }
 
 # if user presses CTRL+C, the FIFO must not persist
 # BTW http://stackoverflow.com/questions/5350865/why-do-many-unix-programs-use-signals-like-usr1
-trap cleanup SIGINT
+trap cleanup EXIT
 
-exec "$@" 2>$FIFO
-cleanup
+"$@" 2>$FIFO
