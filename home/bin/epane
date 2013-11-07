@@ -44,4 +44,7 @@ function cleanup {
 # BTW http://stackoverflow.com/questions/5350865/why-do-many-unix-programs-use-signals-like-usr1
 trap cleanup EXIT
 
+# tab completion makes a local executable specified by name. Add cwd to path so this works.
+export PATH=.:$PATH
+
 "$@" 2>$FIFO
