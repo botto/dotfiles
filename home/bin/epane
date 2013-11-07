@@ -2,16 +2,17 @@
 
 if [ ! $1 ]; then
 	echo "Usage: $0 <command> <args...>"
+	echo "Runs command with independent TMUX pane for stderr"
 	exit 1
 fi
 
 if [ ! $TMUX ]; then
-	echo 'ERRORPANE: TMUX session required!'
+	echo 'EPANE: TMUX session required!'
 	exit 2
 fi
 
 if [ $(tmux list-panes | wc -l) -ne 1 ]; then
-	echo 'ERRORPANE: Close other TMUX panes first'
+	echo 'EPANE: Close other TMUX panes first'
 	exit 3
 fi
 
@@ -24,18 +25,18 @@ mkfifo $FIFO
 tmux split-window -h "tail -f $FIFO"
 tmux select-pane -L
 
-echo -e "ERRORPANE: STDERR output for $1:\n" > $FIFO
+echo -e "EPANE: STDERR output for $1:\n" > $FIFO
 
 # red
 tput setaf 1 > $FIFO
 
 function cleanup {
-	echo ERRORPANE: Cleaning up
+	echo EPANE: Cleaning up
 	rm $FIFO
 	if [ $(tmux capture-pane -p -J -t 1 -S 2 | wc -w) -eq 0 ]; then
 		# no stderr detected, discard buffer
 		tmux kill-pane -t 1
-		echo ERRORPANE: No STDERR, discarding buffer
+		echo EPANE: No STDERR, discarding buffer
 	fi
 }
 
