@@ -10,31 +10,26 @@
 # Put a list of pubkeys in pubkeys/user
 # put specific setup scripts in specific/user
 
-# this is good for log files
-date
-
 # quit on error
 #set -e
-
-
 VERSION=$(git rev-list HEAD --count)
 
-
-
 cat <<EOF
-
 ### naggie/dotfiles, version $VERSION.
 
-Make sure you have at least:
+Dedpendencies:
 
   * tmux 1.8+
   * fish 2.0+ (recommended) or bash 3+
   * vim 7.3+
-  * Dark 256color terminal with mouse support and UTF-8 character encoding
-  * Menlo or Consolas font, or something equally as nice
+  * Dark 256color terminal with SGR1006 mouse support and UTF-8 character
+    encoding for unicode character set
 
 EOF
 
+# this is good for log files
+date
+echo
 
 function warning {
 	# TODO: check PS1, no escape code if not interactive....?
