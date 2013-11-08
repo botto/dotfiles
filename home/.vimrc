@@ -73,7 +73,10 @@ let g:SuperTabNoCompleteAfter = ['^', '\s', '//', '#']
 " failing this, the following option can be set to use a degraded 256 color palette
 let g:solarized_termcolors=256
 
-" good on crap laptop monitors
+" I like the degraded color scheme, even on gvim
+let g:solarized_degrade=1
+
+" good on crap laptop monitors (yes, not recommended by Mr. Schoonover)
 let g:solarized_contrast="high"
 
 set background=dark
@@ -161,3 +164,12 @@ map <C-a> <Home>
 map <C-e> <End>
 noremap! <C-a> <Home>
 noremap! <C-e> <End>
+
+" 4 spaces for tabs, inserted automatically.
+" Tabs work fine in an ideal world. Sadly, spaces are always more consistent.
+" To refactor code: find ./ -type f -exec sed -i 's/\t/    /g' {} \;
+"set shiftwidth=4
+"set expandtab
+
+" Tabs (actual tabs) to be 4-wide. MOAR CODE ON SCREEN. Sorry, Linus.
+set tabstop=4
