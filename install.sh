@@ -73,21 +73,21 @@ if [ -n "$TMUX" ]; then
 	echo 'Reloading tmux configuration...'
 	tmux source-file ~/.tmux.conf
 else
-	warning 'Not inside tmux'
+	warning "Not inside tmux, so can't tell tmux to reload"
 fi
 
 if which fish &>/dev/null && fish -v 2>&1 | grep -q 'version 2'; then
 	test ! -d ~/.config/fish/generated_completions/ \
 		&& fish -c fish_update_completions
 else
-	warning 'Fish shell version 2 not found'
+ 	warning 'Fish shell version 2 not found. Bash it is, then...'
 fi
 
 if [ -n "$DISPLAY" ] && which xrdb &>/dev/null; then
 	echo 'Merging Xresources...'
 	xrdb -merge ~/.Xresources
 else
-	warning 'X not configured'
+	warning "X not configured. Now you can't enjoy the nice urxvt and xterm settings."
 fi
 
 # generate help files (well, tags) for the vim plugins
@@ -95,7 +95,7 @@ if which vim &>/dev/null; then
 	echo 'Generating helptags for vim submodules...'
 	echo 'call pathogen#helptags()|q' | vim -es -n -T dumb
 else
-	warning 'Vim not found!'
+	warning 'Vim not found! Is your brain functioning correctly?'
 fi
 
 echo $VERSION > ~/.naggie-dotfiles-version
