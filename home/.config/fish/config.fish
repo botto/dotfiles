@@ -30,11 +30,11 @@ end
 # must not launch tmux inside tmux (no memes please)
 test -z $TMUX
 	# installed?
-	and which tmux > /dev/null
+	and which tmux > /dev/null ^&1
 	# only attach if single session
-	and test (tmux list-sessions | wc -l ^ /dev/null) -eq 1
+	and test (tmux list-sessions 2>/dev/null | wc -l) -eq 1
 	# don't attach if already attached elsewhere
-	and test (tmux list-clients | wc -l ^ /dev/null) -eq 0
+	and test (tmux list-clients 2>/dev/null | wc -l) -eq 0
 	# terminal must be wide enough
 	and test (tput cols) -gt 119
 	# only then is is safe to assume it's OK to jump in
@@ -94,7 +94,7 @@ end
 
 # only auto set title based on initial pane
 # this detects if the pane is the first in a new window (probably)
-test -n $TMUX
+test $TMUX
 	and test (tmux list-panes | wc -l) -eq 1
 	and set -x TMUX_PRIMARY_PANE set
 

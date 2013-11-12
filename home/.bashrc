@@ -67,7 +67,7 @@ printf "\033]0;%s\007" $HOSTNAME
 
 # only auto set title based on initial pane
 # this detects if the pane is the first in a new window
-test -n $TMUX \
+test $TMUX \
 	&& test $(tmux list-panes | wc -l) -eq 1 \
 	&& TMUX_PRIMARY_PANE=set
 
