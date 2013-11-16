@@ -171,5 +171,6 @@ noremap! <C-e> <End>
 "set shiftwidth=4
 "set expandtab
 
-" Tabs (actual tabs) to be 4-wide. MOAR CODE ON SCREEN. Sorry, Linus.
-set tabstop=4
+" Tabs (actual tabs) to be 4-wide. MOAR CODE ON SCREEN. Sorry, Linus. (block
+" indent broken)
+"set tabstop=4
