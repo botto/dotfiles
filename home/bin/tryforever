@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+if [ ! $1 ]; then
+	echo "Usage: $0 <command> <args...>"
+	echo "Keep trying command until it succeeds. Useful for trainternets."
+	exit 1
+fi
+
+while sleep 1; do
+	"$@" && exit 0
+	echo $1 Failed, trying again...
+done
