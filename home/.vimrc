@@ -174,3 +174,6 @@ noremap! <C-e> <End>
 " Tabs (actual tabs) to be 4-wide. MOAR CODE ON SCREEN. Sorry, Linus. (block
 " indent broken)
 "set tabstop=4
+
+" Press F2 to magically fold everything
+map <F2> :set foldmethod=indent<CR><CR>
