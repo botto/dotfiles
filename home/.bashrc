@@ -108,8 +108,8 @@ function ssh {
 		command ssh "$@"
 	fi
 
-	# prefer clear terminal after SSH
-	clear
+	# prefer clear terminal after SSH, on success only
+	[ $? -eq 0 ] && clear
 }
 
 
