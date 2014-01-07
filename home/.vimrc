@@ -19,6 +19,9 @@ set smartcase
 set autoindent
 set incsearch
 
+" no wrapping by default. Use `:set wrap` to re-enable
+set nowrap
+
 " match by highlight as well (still need to press return to search, however)
 set hlsearch
 " Clear search highlight by hitting enter
