@@ -1,11 +1,17 @@
 #!/bin/bash
-sudo ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
+
+if [ `whoami` != root ]; then
+	echo Run as root
+	exit
+fi
+
+ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 # debian/ubuntu
-sudo apt-get update || exit 2
+apt-get update || exit 2
 
 
 
-sudo apt-get install picocom vim git ssh tmux figlet build-essential \
+apt-get install picocom vim git ssh tmux figlet build-essential \
 	bash-completion keychain mcabber htop autossh bc git-svn most exuberant-ctags fish curl
 
 

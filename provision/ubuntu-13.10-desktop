@@ -1,21 +1,26 @@
 #!/bin/bash
-sudo ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
+if [ `whoami` != root ]; then
+	echo Run as root
+	exit
+fi
+
+ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 # debian/ubuntu
-sudo apt-get update || exit 2
+apt-get update || exit 2
 
 # a lot of packages live here (livecd only)
-#sudo add-apt-repository universe
-#sudo add-apt-repository multiverse
-#sudo apt-get update
+#add-apt-repository universe
+#add-apt-repository multiverse
+#apt-get update
 
 
 # textmode
-sudo apt-get install picocom vim git ssh tmux figlet build-essential \
+apt-get install picocom vim git ssh tmux figlet build-essential \
 	bash-completion keychain htop fish curl
 
 # gui
-sudo apt-get install chromium-browser vlc
+apt-get install chromium-browser vlc
 
-sudo add-apt-repository ppa:team-xbmc/ppa
-sudo apt-get update
-sudo apt-get install xbmc
+add-apt-repository ppa:team-xbmc/ppa
+apt-get update
+apt-get install xbmc
