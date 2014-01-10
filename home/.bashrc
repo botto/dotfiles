@@ -18,7 +18,7 @@ export LANG=en_GB.utf8
 
 # On some machines, hostname is not set. Using $(hostname) to do this is slow,
 # so just read from /etc/hostname)
-[ $HOSTNAME ] || HOSTNAME=$(cat /etc/hostname 2>/dev/null || hostname)
+[ $HOSTNAME ] || export HOSTNAME=$(cat /etc/hostname 2>/dev/null || hostname)
 
 # TERM TYPE Inside screen/tmux, it should be screen-256color -- this is
 # configured in .tmux.conf.  Outside, it's up to you to make sure your terminal
