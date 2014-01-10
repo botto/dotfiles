@@ -16,19 +16,11 @@ apt-get install picocom vim git ssh figlet build-essential \
 # apt-add-repository
 apt-get install python-software-properties
 
-# tmux 1.8
+# tmux 1.8, fish 2.0, nodejs 0.10
+# alternative: backports:
+# http://askubuntu.com/questions/27362/how-to-only-install-updates-from-a-specific-repository
 apt-add-repository ppa:pi-rho/dev
-apt-get update
-apt-get install tmux
-
-# fish 2.0
 apt-add-repository ppa:fish-shell/release-2
+add-apt-repository ppa:chris-lea/node.js
 apt-get update
-apt-get install fish
-
-# recent nodejs
-
-# change shell to fish
-
-
-# note: could add backports repository.
+apt-get install tmux fish nodejs
