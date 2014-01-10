@@ -1,0 +1,11 @@
+#!/bin/bash
+# Looks for all git repositories in current dir and pulls
+
+# For a flash drive, symlink this to the root
+
+find . -maxdepth 2 -name ".git"  -printf "%h\n" | while read DIR; do
+	# forked, so dir is not persistent
+	cd "$DIR"
+	git pull origin master
+	git submodule update
+done

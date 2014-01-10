@@ -120,15 +120,12 @@ function ssh --description 'SSH wrapper to magically LOCK tmux title to hostname
 
 		printf "\\033k%s\\033\\\\" $host
 		tmux set -q allow-rename off
-		command ssh $argv
+		command ssh $argv ; and clear
 		tmux set -q allow-rename on
 		fish_set_tmux_title
 	else
-		command ssh $argv
+		command ssh $argv ; and clear
 	end
-
-	# prefer clear terminal after SSH
-	and clear
 end
 
 # initially set title

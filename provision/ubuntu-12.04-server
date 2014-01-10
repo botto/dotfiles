@@ -1,0 +1,25 @@
+#!/bin/bash
+sudo ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
+# debian/ubuntu
+sudo apt-get update || exit 2
+
+# textmode
+sudo apt-get install picocom vim git ssh figlet build-essential \
+	bash-completion keychain mcabber htop curl
+
+# apt-add-repository
+sudo apt-get install python-software-properties
+
+# tmux 1.8
+sudo apt-add-repository ppa:pi-rho/dev
+sudo apt-get update
+sudo apt-get install tmux
+
+# fish 2.0
+
+# recent nodejs
+
+# change shell to fish
+
+
+# note: could add backports repository.
