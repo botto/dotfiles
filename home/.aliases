@@ -19,7 +19,8 @@ alias nom=npm
 alias webserver='python -m SimpleHTTPServer'
 
 # stop vim taking ages, so it doesn't look for X server
-alias vim='vim -X'
+# Also, tabs by default. -O and -o will override, don't worry.
+alias vim='vim -X -p'
 
 # xterm in UTF8 mode. Get >=v277 for better mouse support
 # these settings are now defined in .Xresources : run xrdb -merge ~/.Xresources
