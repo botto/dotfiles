@@ -26,3 +26,6 @@ alias vim='vim -X -p'
 # these settings are now defined in .Xresources : run xrdb -merge ~/.Xresources
 #alias xterm='xterm -geometry 160x40 -fg white -bg black -fa "DejaVu Sans Mono:size=12:antialias=true"'
 #alias xterm='xterm -geometry 160x40 -fg white -bg black -u8'
+
+# list by creation date (I think)
+alias lr='ls -latr'
