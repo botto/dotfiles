@@ -32,12 +32,16 @@ inactive = [
 ]
 
 for repository in active:
-	call(['git','clone','--recursive',repository])
+	call(['git','clone','--recursive','--quiet',repository])
 
-os.makedirs('INACTIVE')
+try:
+	os.makedirs('INACTIVE')
+except (Exception):
+	pass
+
 os.chdir('INACTIVE')
 
 for repository in inactive:
-	call(['git','clone','--recursive',repository])
+	call(['git','clone','--recursive','--quiet',repository])
 
 copy('dotfiles/etc/git-pull-all','.')
