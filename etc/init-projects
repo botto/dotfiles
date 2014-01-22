@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from subprocess import call
 import os
+from shutil import copy
 
 # get all my repositories.
 # TODO: automatically enumerate github
@@ -34,3 +35,5 @@ os.chdir('INACTIVE')
 
 for repository in inactive:
 	call(['git','clone','--recursive',repository])
+
+copy('dotfiles/etc/git-pull-all','.')
