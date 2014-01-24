@@ -59,9 +59,12 @@ test -d ~/.vim/ && rm -rf ~/.vim/
 #test -d ~/.config/fish/ && rm -rf ~/.config/fish/
 
 echo 'Copying dotfiles...'
-cp -r home/* ~
+#cp -r home/* ~ # non-dotfiles
 # copy dotfiles separately , normal glob does not match
 cp -r home/.??* ~
+
+echo 'Copying scripts...'
+cp -a bin ~
 chmod +x ~/bin/*
 
 if [ ! $(tput colors) -eq 256 ]; then
