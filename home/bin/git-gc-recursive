@@ -1,0 +1,14 @@
+#!/bin/bash
+# Looks for all git repositories in current dir and pulls
+
+# For a flash drive, symlink this to the root
+
+find . -name ".git"  -printf "%h\n" | while read DIR; do
+	# forked, so dir is not persistent
+	(
+		cd "$DIR"
+		echo
+		pwd
+		git gc
+	)
+done
