@@ -43,5 +43,3 @@ os.chdir('INACTIVE')
 
 for repository in inactive:
 	call(['git','clone','--recursive','--quiet',repository])
-
-copy('dotfiles/etc/git-pull-all','.')

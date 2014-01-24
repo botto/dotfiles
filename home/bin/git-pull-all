@@ -5,7 +5,9 @@
 
 find . -maxdepth 2 -name ".git"  -printf "%h\n" | while read DIR; do
 	# forked, so dir is not persistent
-	cd "$DIR"
-	git pull origin master
-	git submodule update
+	(
+		cd "$DIR"
+		git pull origin master
+		git submodule update
+	)
 done
