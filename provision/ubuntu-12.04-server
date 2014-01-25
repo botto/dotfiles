@@ -24,3 +24,9 @@ apt-add-repository ppa:fish-shell/release-2
 add-apt-repository ppa:chris-lea/node.js
 apt-get update
 apt-get install tmux fish nodejs
+
+
+# Make node processes able to listen on port 80
+# http://stackoverflow.com/questions/413807/is-there-a-way-for-non-root-processes-to-bind-to-privileged-ports-1024-on-l
+apt-get install libcap-bin
+setcap 'cap_net_bind_service=+ep' /usr/local/bin/node
