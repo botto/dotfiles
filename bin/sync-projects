@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 from subprocess import call
 import os
-from shutil import copy
+import re
 
-# get all my repositories.
+# clone/pull all my repositories.
 # TODO: automatically enumerate github
 
 # Doing thins this way increases redundancy, highlights active projects and
@@ -31,15 +31,23 @@ inactive = [
 	'git@github.com:naggie/algalon.git',
 ]
 
-for repository in active:
-	call(['git','clone','--recursive','--quiet',repository])
+def sync(urls):
+	origin = os.getcwd()
+	for url in urls:
+		dir = re.search(r"(\w+)\.git$",url).group(1)
+		if os.path.exists('%s/.git' % dir):
+			print 'PULL %s' % dir
+			os.chdir(dir)
+			call(['git','pull','origin','master'])
+			call(['git','submodule','update'])
+			os.chdir(origin)
+		else:
+			print 'INIT %s' % dir
+			call(['git','clone','--recursive','--quiet',url,dir])
 
-try:
+sync(active)
+if not os.path.exists('INACTIVE'):
 	os.makedirs('INACTIVE')
-except (Exception):
-	pass
 
 os.chdir('INACTIVE')
-
-for repository in inactive:
-	call(['git','clone','--recursive','--quiet',repository])
+sync(inactive)
