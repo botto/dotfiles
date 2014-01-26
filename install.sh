@@ -74,7 +74,7 @@ fi
 # reload TMUX config if running inside tmux
 if [ -n "$TMUX" ]; then
 	echo 'Reloading tmux configuration...'
-	tmux source-file ~/.tmux.conf
+	tmux source-file ~/.tmux.conf >/dev/null
 else
 	warning "Not inside tmux, so can't tell tmux to reload"
 fi
