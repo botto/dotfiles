@@ -36,13 +36,13 @@ def sync(urls):
 	for url in urls:
 		dir = re.search(r"([\.\-0-9a-zA-Z]+)\.git$",url).group(1)
 		if os.path.exists('%s/.git' % dir):
-			print 'PULL %s' % dir
+			print '\033[92mPULL %s\033[0m' % dir
 			os.chdir(dir)
 			call(['git','pull','origin','master'])
 			call(['git','submodule','update'])
 			os.chdir(origin)
 		else:
-			print 'INIT %s' % dir
+			print '\033[92mINIT %s\033[0m' % dir
 			call(['git','clone','--recursive','--quiet',url,dir])
 
 sync(active)
