@@ -7,23 +7,23 @@ fi
 
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 # debian/ubuntu
-apt-get update || exit 2
+yes | apt-get update || exit 2
 
 # textmode
-apt-get install picocom vim git ssh figlet build-essential \
+yes | apt-get install picocom vim git ssh figlet build-essential \
 	bash-completion keychain mcabber htop curl
 
 # apt-add-repository
-apt-get install python-software-properties
+yes | apt-get install python-software-properties
 
 # tmux 1.8, fish 2.0, nodejs 0.10
 # alternative: backports:
 # http://askubuntu.com/questions/27362/how-to-only-install-updates-from-a-specific-repository
-apt-add-repository ppa:pi-rho/dev
-apt-add-repository ppa:fish-shell/release-2
-add-apt-repository ppa:chris-lea/node.js
+apt-add-repository --yes ppa:pi-rho/dev
+apt-add-repository --yes ppa:fish-shell/release-2
+add-apt-repository --yes ppa:chris-lea/node.js
 apt-get update
-apt-get install tmux fish nodejs
+yes | apt-get install tmux fish nodejs
 
 
 # Make node processes able to listen on port 80

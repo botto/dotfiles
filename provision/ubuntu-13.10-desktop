@@ -15,12 +15,12 @@ apt-get update || exit 2
 
 
 # textmode
-apt-get install picocom vim vim-gtk git ssh tmux figlet build-essential \
+yes | apt-get install picocom vim vim-gtk git ssh tmux figlet build-essential \
 	bash-completion keychain htop fish curl
 
 # gui
-apt-get install chromium-browser vlc
+yes | apt-get install chromium-browser vlc
 
 add-apt-repository ppa:team-xbmc/ppa
 apt-get update
-apt-get install xbmc
+yes | apt-get install xbmc
