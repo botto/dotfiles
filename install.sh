@@ -12,7 +12,7 @@
 
 # quit on error
 #set -e
-VERSION=$(git rev-list HEAD --count)
+VERSION=$(git rev-list HEAD --count)-$(git rev-parse --abbrev-ref HEAD)
 
 cat <<EOF
 ### naggie/dotfiles, version $VERSION.
