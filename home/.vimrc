@@ -114,9 +114,8 @@ nnoremap gF <C-w>gf
 " Ex mode? WTF VIM?
 map Q <Nop>
 
-" I never use macros. My plugins are a better replacement. q just serves to
-" annoy me, otherwise.
-map q <Nop>
+" macros are extremely useful in rare cases, best not to disable
+"map q <Nop>
 
 " re-flow entire paragraph
 nmap Q gqap
