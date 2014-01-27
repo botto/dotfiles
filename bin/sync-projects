@@ -31,18 +31,22 @@ inactive = [
 	'git@github.com:naggie/algalon.git',
 ]
 
+def step(text):
+	'Declare a step in execution. Simply print in green.'
+	print '\033[92m%s\033[0m' % text
+
 def sync(urls):
 	origin = os.getcwd()
 	for url in urls:
 		dir = re.search(r"([\.\-0-9a-zA-Z]+)\.git$",url).group(1)
 		if os.path.exists('%s/.git' % dir):
-			print '\033[92mPULL %s\033[0m' % dir
+			step('PULL %s' % dir)
 			os.chdir(dir)
 			call(['git','pull','origin','master'])
 			call(['git','submodule','update'])
 			os.chdir(origin)
 		else:
-			print '\033[92mINIT %s\033[0m' % dir
+			step('INIT %s' % dir)
 			call(['git','clone','--recursive','--quiet',url,dir])
 
 sync(active)
@@ -51,3 +55,9 @@ if not os.path.exists('INACTIVE'):
 
 os.chdir('INACTIVE')
 sync(inactive)
+os.chdir('..')
+
+# install latest dotfiles
+step('INST dotfiles')
+os.chdir('dotfiles')
+call(['./install.sh','naggie'])
