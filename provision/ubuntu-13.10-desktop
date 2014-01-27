@@ -15,7 +15,7 @@ apt-get update || exit 2
 
 
 # textmode
-apt-get install picocom vim git ssh tmux figlet build-essential \
+apt-get install picocom vim vim-gtk git ssh tmux figlet build-essential \
 	bash-completion keychain htop fish curl
 
 # gui
