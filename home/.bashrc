@@ -182,7 +182,7 @@ export PAGER=~/bin/vimpager
 stty erase ^?
 #stty erase ^H
 
-[ -x /usr/bin/keychain ] && [ -r ~/.ssh/id_rsa ] && eval `keychain --quiet --eval ~/.ssh/id_rsa`
+[ -x /usr/bin/keychain ] && [ -r ~/.ssh/id_rsa ] && eval `keychain --nogui --quiet --eval ~/.ssh/id_rsa`
 test -x /usr/bin/dircolors && eval $(dircolors ~/.dir_colors)
 
 # ls is the first thing I normally do when I log in. Let's hope it's not annoying
