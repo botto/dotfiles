@@ -18,6 +18,9 @@ alias cim=vim
 alias nom=npm
 alias webserver='python -m SimpleHTTPServer'
 
+# colours and ANSI lines
+alias tree="tree -CA"
+
 # stop vim taking ages, so it doesn't look for X server
 # Also, tabs by default. -O and -o will override, don't worry.
 alias vim='vim -X -p'
