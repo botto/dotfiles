@@ -14,7 +14,7 @@
 #set -e
 CHANGE=$(git rev-list HEAD --count)
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
-VERSION=$CHANGE-$BRANCH
+VERSION=$BRANCH-$CHANGE
 
 cat <<EOF
 ### naggie/dotfiles, version $VERSION.
