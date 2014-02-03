@@ -66,4 +66,5 @@ os.chdir('..')
 # install latest dotfiles
 step('INST dotfiles')
 os.chdir('dotfiles')
-call(['./install.sh','naggie'])
+call(['git','checkout','naggie'])
+call(['./install.sh'])

@@ -78,7 +78,7 @@ test -x /usr/bin/keychain
 function fish_greeting
 	echo \n\> Welcome to $HOSTNAME, $USER. Files in $PWD are:\n
 	ls
-	echo -e "\n> fish, dotfiles v"(cat ~/.naggie-dotfiles-version)
+	echo -e "\n> fish, dotfiles version "(cat ~/.naggie-dotfiles-version)
 end
 
 
