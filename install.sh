@@ -12,7 +12,9 @@
 
 # quit on error
 #set -e
-VERSION=$(git rev-list HEAD --count)-$(git rev-parse --abbrev-ref HEAD)
+CHANGE=$(git rev-list HEAD --count)
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+VERSION=$CHANGE-$BRANCH
 
 cat <<EOF
 ### naggie/dotfiles, version $VERSION.
@@ -104,26 +106,8 @@ fi
 echo $VERSION > ~/.naggie-dotfiles-version
 
 # in case someone forgot...
-chmod +x presets/*
-# oops, not README.md
-chmod -x presets/README.md
-
-# user-specific stuff
-echo
-if [ "$PRESETS" ]; then
-	cd presets/
-	for PRESET in ${PRESETS[@]}; do
-		if [ -x "$PRESET" ]; then
-			echo "Installing preset: $PRESET"
-			source "$PRESET"
-		else
-			warning Invalid preset: $PRESET
-		fi
-	done
-	cd ..
-else
-	warning 'No preset specified, default installed.'
-	echo 'Run with ./install.sh <preset> <preset> ...'
-	echo To load a prefix from presets/
+if [ $BRANCH == 'master' ]; then
+	warning "Generic version installed from master branch. Make your own branch for user-specific things."
+elif [ $BRANCH !== $USER ]; then
+	warning "Branch does not match user. Sure about this?"
 fi
-
