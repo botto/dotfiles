@@ -1,14 +1,9 @@
 #!/bin/bash
 
-# Usage: ./install.sh <preset> <preset> <...>
-#
-# Where preset is nothing (default) or a script in preset/
-
 # RUN AS ROOT TO INSTALL TO /etc/skel/ so new users have these dotfiles
 # or sudo -u <user> ./install.sh to install as any other user
 
-# Put a list of pubkeys in pubkeys/user
-# put specific setup scripts in specific/user
+# Else will install to home dir
 
 # quit on error
 #set -e
