@@ -27,5 +27,3 @@
 	default = current
 [pull]
 	default = current
-[branch]
-	autosetuprebase = always
