@@ -1,22 +1,17 @@
-alias more=less
 alias sagi='yes | sudo apt-get install'
-alias grep='grep --color=auto'
 alias la='ls -al'
 alias cd..='cd ..'
 alias ..='cd ..'
 alias ...='cd ../..'
+
+# typo fixes
 alias c=cd
 alias sl=ls
 alias l=ls
-alias s='git status'
-alias d='git diff'
-alias o='git log'
-alias gi=git
-alias g=git
 alias v=vim
 alias cim=vim
 alias nom=npm
-alias webserver='python -m SimpleHTTPServer'
+alias gi=git
 
 # colours and ANSI lines
 alias tree="tree -CA"
@@ -25,10 +20,15 @@ alias tree="tree -CA"
 # Also, tabs by default. -O and -o will override, don't worry.
 alias vim='vim -X -p'
 
-# xterm in UTF8 mode. Get >=v277 for better mouse support
-# these settings are now defined in .Xresources : run xrdb -merge ~/.Xresources
-#alias xterm='xterm -geometry 160x40 -fg white -bg black -fa "DejaVu Sans Mono:size=12:antialias=true"'
-#alias xterm='xterm -geometry 160x40 -fg white -bg black -u8'
-
 # list by creation date (I think)
 alias lr='ls -latr'
+
+# Git
+alias g=git
+alias s='git status'
+alias d='git diff'
+alias o='git log'
+alias b='git branch -a'
+
+alias webserver='python -m SimpleHTTPServer'
+alias grep='grep --color=auto'

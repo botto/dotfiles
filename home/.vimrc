@@ -35,13 +35,14 @@ set cursorline
 " ...and column. Good for lining up and feeling like a pro hacker.
 set cursorcolumn
 
-au BufNewFile,BufRead *.json set filetype=javascript
-au BufNewFile,BufRead *.less set filetype=css
-au BufNewFile,BufRead *.ino  set filetype=c
-au BufNewFile,BufRead *.pde  set filetype=c
-au BufNewFile,BufRead *.md   set filetype=markdown
-au BufNewFile,BufRead *.fish set filetype=sh
-au BufNewFile,BufRead *.fdc  set filetype=sdc
+au BufNewFile,BufRead *.json   set filetype=javascript
+au BufNewFile,BufRead *.less   set filetype=css
+au BufNewFile,BufRead *.ino    set filetype=c
+au BufNewFile,BufRead *.pde    set filetype=c
+au BufNewFile,BufRead *.md     set filetype=markdown
+au BufNewFile,BufRead *.fish   set filetype=sh
+au BufNewFile,BufRead *.fdc    set filetype=sdc
+au BufNewFile,BufRead .aliases set filetype=sh
 
 " It's not the 70's anymore. Use git or something.
 set noswapfile
