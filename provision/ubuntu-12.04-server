@@ -11,7 +11,7 @@ yes | apt-get update || exit 2
 
 # textmode
 yes | apt-get install picocom vim git ssh figlet build-essential \
-	bash-completion keychain mcabber htop curl
+	bash-completion keychain mcabber htop curl tree
 
 # apt-add-repository
 yes | apt-get install python-software-properties

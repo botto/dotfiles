@@ -13,6 +13,6 @@ apt-get update || exit 2
 
 yes | apt-get install picocom vim git ssh tmux figlet build-essential \
 	bash-completion keychain mcabber htop autossh bc git-svn most \
-	exuberant-ctags fish curl
+	exuberant-ctags fish curl tree
 
 

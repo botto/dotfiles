@@ -16,7 +16,7 @@ apt-get update || exit 2
 
 # textmode
 yes | apt-get install picocom vim vim-gtk git ssh tmux figlet build-essential \
-	bash-completion keychain htop fish curl
+	bash-completion keychain htop fish curl tree
 
 # gui
 yes | apt-get install chromium-browser vlc
