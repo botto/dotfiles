@@ -29,8 +29,3 @@
 	default = current
 [branch]
 	autosetuprebase = always
-[user]
-	name = Callan Bryant
-	email = callan.bryant@gmail.com
-[github]
-	user = naggie
