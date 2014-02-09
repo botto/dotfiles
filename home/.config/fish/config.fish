@@ -107,10 +107,8 @@ function fish_set_tmux_title --description "Sets tmux pane title to output of fi
 end
 
 function fish_prompt --description 'Write out the prompt'
-	echo -n -s \n (set_color green) $USER @ $HOSTNAME (set_color normal)\
-	' ' (set_color --bold blue) (pwd) (set_color normal)\
-	(set_color yellow) (__fish_git_prompt) (set_color normal)\
-	\n\$ ' '
+	printf "\n\33[32m%s@%s \33[1;34m%s\33[0;33m%s\33[m\n\$ " \
+		$USER $HOSTNAME $PWD (__fish_git_prompt)
 end
 
 function ssh --description 'SSH wrapper to magically LOCK tmux title to hostname, if tmux is running'
