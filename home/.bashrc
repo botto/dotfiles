@@ -148,33 +148,22 @@ function deferred {
 	#complete -o default -W 'example.com example.net' ssh scp ping
 }
 
+# patches for Mac OS X
 PLATFORM=`uname`
-if [[ $PLATFORM == 'Linux' ]]; then
-	alias ls='ls --color=auto'
-elif [[ $PLATFORM == 'Darwin' ]]; then
+if [ "$PLATFORM" == 'Darwin' ]; then
 	#alias ls='ls -G'
+	unalias ls
 	export CLICOLOR=1
 	export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+	# slightly different utf8 locale format...
+	# see `locale -a`
+	export LANG='en_GB.UTF-8'
 fi
 
 # cd then ls
 function cd {
 	builtin cd "$@" && ls
 }
-
-# cheap coloured man pages. Yay!
-#export PAGER=less
-#function man {
-#	env \
-#	LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-#	LESS_TERMCAP_md=$(printf "\e[1;31m") \
-#	LESS_TERMCAP_me=$(printf "\e[0m") \
-#	LESS_TERMCAP_se=$(printf "\e[0m") \
-#	LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-#	LESS_TERMCAP_ue=$(printf "\e[0m") \
-#	LESS_TERMCAP_us=$(printf "\e[1;32m") \
-#	man "$@"
-#}
 
 export PAGER=~/bin/vimpager
 

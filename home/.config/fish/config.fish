@@ -65,9 +65,21 @@ set -x GCC_COLORS 1
 # fish specific aliases
 alias tm 'test -z $TMUX; and tmux a ; or tmux'
 
+# patches for Mac OS X
+set PLATFORM (uname)
+if test "$PLATFORM" == 'Darwin'
+	#alias ls='ls -G'
+	unalias ls
+	set -x CLICOLOR 1
+	set -x LSCOLORS gxBxhxDxfxhxhxhxhxcxcx
+	# slightly different utf8 locale format...
+	# see `locale -a`
+	set -x LANG 'en_GB.UTF-8'
+end
+
 function cd
 	builtin cd $argv
-		and ls
+	and ls
 end
 
 test -x /usr/bin/keychain
