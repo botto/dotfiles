@@ -17,7 +17,8 @@ export EDITOR='vim -X'
 export LANG=en_GB.utf8
 
 # mac bc read the conf file to allow floating point maths
-export BC_ENV_ARGS=~/.bcrc
+# and load the standard library
+export BC_ENV_ARGS="$HOME/.bcrc -l"
 # also, copy the fish bc wrapper
 function math {
 	echo "$@" | bc
