@@ -16,6 +16,13 @@ export EDITOR='vim -X'
 # NERDtree in vim. So very awesome.
 export LANG=en_GB.utf8
 
+# mac bc read the conf file to allow floating point maths
+export BC_ENV_ARGS=~/.bcrc
+# also, copy the fish bc wrapper
+function math {
+	echo "$@" | bc
+}
+
 # On some machines, hostname is not set. Using $(hostname) to do this is slow,
 # so just read from /etc/hostname)
 [ $HOSTNAME ] || HOSTNAME=$(cat /etc/hostname 2>/dev/null || hostname)

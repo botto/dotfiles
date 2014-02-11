@@ -8,6 +8,9 @@ set -x PATH ~/bin /usr/local/bin /usr/local/share/npm/bin $PATH
 # NERDtree in vim. So very awesome.
 set -x LANG=en_GB.utf8
 
+# mac bc read the conf file to allow floating point maths
+set -x BC_ENV_ARGS ~/.bcrc
+
 # On some machines, hostname is not set. Using $(hostname) to do this is slow,
 # so just read from /etc/hostname)
  test $HOSTNAME; or set -x HOSTNAME (cat /etc/hostname 2>/dev/null; or hostname)
