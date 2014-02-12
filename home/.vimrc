@@ -43,6 +43,7 @@ au BufNewFile,BufRead *.md     set filetype=markdown
 au BufNewFile,BufRead *.fish   set filetype=sh
 au BufNewFile,BufRead *.fdc    set filetype=sdc
 au BufNewFile,BufRead .aliases set filetype=sh
+au BufNewFile,BufRead .bcrc    set filetype=bc
 
 " It's not the 70's anymore. Use git or something.
 set noswapfile
