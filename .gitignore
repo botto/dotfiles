@@ -1,2 +1,3 @@
 home/.ssh/authorized_keys
-
+build
+*iso

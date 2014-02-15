@@ -1,4 +1,5 @@
 #!/bin/bash
+
 if [ `whoami` != root ]; then
 	echo Run as root
 	exit
@@ -8,15 +9,17 @@ ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 # debian/ubuntu
 apt-get update || exit 2
 
-# a lot of packages live here (livecd only)
-#add-apt-repository universe
-#add-apt-repository multiverse
-#apt-get update
+# a lot of packages live here
+add-apt-repository universe
+add-apt-repository multiverse
 
 
 # textmode
 yes | apt-get install picocom vim vim-gtk git ssh tmux figlet build-essential \
 	bash-completion keychain htop fish curl tree
+
+# BRCM wifi....
+yes | apt-get install b43-fwcutter firmware-b43-installer
 
 # gui
 yes | apt-get install chromium-browser vlc
@@ -24,3 +27,6 @@ yes | apt-get install chromium-browser vlc
 add-apt-repository ppa:team-xbmc/ppa
 apt-get update
 yes | apt-get install xbmc
+
+# fix unmet deps caused by removing stuff
+yes | apt-get -f install
