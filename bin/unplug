@@ -1,0 +1,13 @@
+#!/bin/dash
+# turns of the computer as fast as possible, hopefully not corrupting data
+# good for livecd
+
+# flush rw cache
+sync
+
+# unmount all in mtab, mount read-only if failed, force
+umount -a -r -f
+
+# turn off immediately
+poweroff --force
+
