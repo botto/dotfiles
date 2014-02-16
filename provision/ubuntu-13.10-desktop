@@ -8,12 +8,12 @@ fi
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 # debian/ubuntu
 apt-get update || exit 2
-yes | apt-get upgrade
 
 # a lot of packages live here
 add-apt-repository universe
 add-apt-repository multiverse
 
+sudo update-locale LANG=en_GB.utf8 LANGUAGE=en_GB.utf8 LC_ALL=en_GB.utf8
 
 # textmode
 yes | apt-get install picocom vim vim-gtk git ssh tmux figlet build-essential \
@@ -30,8 +30,14 @@ yes | apt-get install xbmc
 # fix unmet deps caused by removing stuff
 yes | apt-get -f install
 
+# BCRM wifi
+yes | apt-get install broadcom-sta-common
+
 # fish default shell
 useradd -D -s /usr/bin/fish
 
-# autoremove packages
+yes | INSIDE apt-get remove --purge 'libreoffice*'
+yes | INSIDE apt-get upgrade
+
+# orphaned packages
 yes | apt-get autoremove

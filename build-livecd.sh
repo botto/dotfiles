@@ -124,7 +124,6 @@ mount -t sysfs  none build/root/sys
 mount -t devpts none build/root/dev/pts
 mount --bind /dev/   build/root/dev
 
-# TODO: move some of these apt commands to the provision script, or a custom one
 # In 9.10, (+?) before installing or upgrading packages you need to run
 # also may as well update/upgrade and add repositories
 dbus-uuidgen | INSIDE tee /var/lib/dbus/machine-id
@@ -135,11 +134,10 @@ INSIDE add-apt-repository multiverse
 
 INSIDE ln -s /lib/init/upstart-job /etc/init.d/whoopsie # required, otherwise apt breaks
 yes | INSIDE apt-get update
-yes | INSIDE apt-get install git
-yes | INSIDE apt-get remove --purge 'libreoffice*'
-yes | INSIDE apt-get upgrade
 
-yes | apt-get install broadcom-sta-common
+
+yes | INSIDE apt-get install git
+
 
 #BREAKPOINT
 
@@ -172,6 +170,7 @@ EOF
 # CD is limited. A classic example is downloaded package files, which can be
 # cleaned out using:
 #INSIDE aptitude clean
+INSIDE apt-get upgrade # just in case it's not already done
 INSIDE apt-get clean
 INSIDE apt-get autoremove
 
@@ -181,6 +180,9 @@ rm     build/root/.bash_history
 
 rm build/root/etc/hosts
 rm build/root/etc/resolv.conf
+
+# then network manager can overwrite it
+touch build/root/etc/resolv.conf
 
 # Clean after installing software
 rm build/root/var/lib/dbus/machine-id
@@ -240,7 +242,7 @@ mkisofs -D -r -V "Darkbuntu" -cache-inodes -J -l \
 	-boot-info-table \
 	-o "$TARGET" build/extract/
 
-# clean, TODO MUST MAKE SURE EVERYTHING IS UNMOUNTED FIRST, PARTICULARLY /dev
+# clean, MUST MAKE SURE EVERYTHING IS UNMOUNTED FIRST, PARTICULARLY /dev
 rm -rf build/*
 
 # yay git
