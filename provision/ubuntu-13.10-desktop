@@ -19,11 +19,9 @@ add-apt-repository multiverse
 yes | apt-get install picocom vim vim-gtk git ssh tmux figlet build-essential \
 	bash-completion keychain htop fish curl tree
 
-# BRCM wifi....
-yes | apt-get install b43-fwcutter firmware-b43-installer
-
 # gui
 yes | apt-get install chromium-browser vlc
+yes | apt-get remove --purge firefox
 
 add-apt-repository ppa:team-xbmc/ppa
 apt-get update
