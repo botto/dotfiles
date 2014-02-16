@@ -16,6 +16,7 @@
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
+
 UBUNTU_ISO_URL='http://www.ubuntu.com/start-download?distro=desktop&bits=64&release=latest'
 SOURCE='ubuntu-13.10-desktop-amd64.iso'
 TARGET="darkbuntu-$BRANCH.iso"
@@ -68,6 +69,10 @@ function INSIDE {
 		"$@"
 }
 
+function BREAKPOINT {
+	INSIDE /bin/bash
+}
+
 # remove all trace of building in a safe way on termination
 # might fail if things are not there yet, but that's fine.
 function EMERGENCY_CLEANUP {
@@ -87,6 +92,9 @@ trap EMERGENCY_CLEANUP SIGINT
 #set -x
 
 [ -d "$BUILD_DIR" ] || mkdir "$BUILD_DIR"/
+
+echo; echo; echo
+set -x
 
 # clean
 rm -rf "$BUILD_DIR"/*
@@ -116,7 +124,7 @@ cp /etc/hosts       "$BUILD_DIR"/root/etc/
 mount -t proc   none "$BUILD_DIR"/root/proc
 mount -t sysfs  none "$BUILD_DIR"/root/sys
 mount -t devpts none "$BUILD_DIR"/root/dev/pts
-mount --bind /dev/ "$BUILD_DIR"/root/dev
+mount --bind /dev/   "$BUILD_DIR"/root/dev
 
 # In 9.10, (+?) before installing or upgrading packages you need to run
 # also may as well update/upgrade and add repositories
@@ -126,18 +134,13 @@ INSIDE ln -s /bin/true /sbin/initctl
 INSIDE add-apt-repository universe
 INSIDE add-apt-repository multiverse
 
-# get a shell inside the chroot (debug)
-#INSIDE /bin/bash
-
+INSIDE ln -s /lib/init/upstart-job /etc/init.d/whoopsie # required, otherwise apt breaks
 yes | INSIDE apt-get update
-yes | INSIDE apt-get install aptitude git
-
-# When you want to remove packages remember to use purge
-INSIDE aptitude purge libreoffice
-
-#yes | INSIDE apt-get remove --purge 'libreoffice*'
-
+yes | INSIDE apt-get install git
+yes | INSIDE apt-get remove --purge 'libreoffice*'
 yes | INSIDE apt-get upgrade
+
+#BREAKPOINT
 
 # install packages
 # and dotfiles
@@ -167,7 +170,7 @@ EOF
 # Be sure to remove any temporary files which are no longer needed, as space on a
 # CD is limited. A classic example is downloaded package files, which can be
 # cleaned out using:
-INSIDE aptitude clean
+#INSIDE aptitude clean
 INSIDE apt-get clean
 INSIDE apt-get autoremove
 

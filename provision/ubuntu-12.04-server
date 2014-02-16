@@ -8,6 +8,7 @@ fi
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 # debian/ubuntu
 yes | apt-get update || exit 2
+yes | apt-get upgrade
 
 # textmode
 yes | apt-get install picocom vim git ssh figlet build-essential \

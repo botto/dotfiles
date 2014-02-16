@@ -8,6 +8,7 @@ fi
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 # debian/ubuntu
 apt-get update || exit 2
+yes | apt-get upgrade
 
 # a lot of packages live here
 add-apt-repository universe
@@ -30,3 +31,9 @@ yes | apt-get install xbmc
 
 # fix unmet deps caused by removing stuff
 yes | apt-get -f install
+
+# fish default shell
+useradd -D -s /usr/bin/fish
+
+# autoremove packages
+yes | apt-get autoremove
