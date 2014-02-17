@@ -40,8 +40,10 @@ elif [ ! -f "$SOURCE" ]; then
 	wget "$UBUNTU_ISO_URL" -O "$SOURCE" || exit 2
 fi
 
+echo
 echo SOURCE: $SOURCE
 echo TARGET: $TARGET
+echo
 echo
 
 
@@ -91,7 +93,7 @@ trap EMERGENCY_CLEANUP SIGINT
 
 [ -d build ] || mkdir build/
 
-echo; echo; echo
+# echo commands to aid debugging
 set -x
 
 # clean
@@ -133,9 +135,12 @@ INSIDE add-apt-repository universe
 INSIDE add-apt-repository multiverse
 
 INSIDE ln -s /lib/init/upstart-job /etc/init.d/whoopsie # required, otherwise apt breaks
+
+# Utterly stupid hack required to fix keyboard map for X on livecd.
+sed -i -re "s/'en': *'us',/'en': 'gb',/g" \
+	build/root/usr/lib/ubiquity/ubiquity/misc.py
+
 yes | INSIDE apt-get update
-
-
 yes | INSIDE apt-get install git
 
 
@@ -174,6 +179,7 @@ INSIDE apt-get upgrade # just in case it's not already done
 INSIDE apt-get clean
 INSIDE apt-get autoremove
 
+#BREAKPOINT
 
 rm -rf build/root/tmp/*
 rm     build/root/.bash_history
@@ -226,12 +232,13 @@ printf $(du -sx --block-size=1 build/root | cut -f1) > build/extract/casper/file
 # recalc hashes
 rm build/extract/md5sum.txt
 # subshell, no chdir persistence
+echo 'Calculating hashes...'
 (
 	cd build/extract
 	find -type f -print0 \
 		| xargs -0 md5sum \
 		| grep -v isolinux/boot.cat \
-		| tee md5sum.txt
+		> md5sum.txt
 )
 
 # Create the ISO image
