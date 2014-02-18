@@ -29,8 +29,13 @@ TARGET="darkbuntu-$BRANCH.iso"
 # 2. Target exists: Target is used as source
 # 3. Just source exists: New target is created
 
+function WARNING {
+	# TODO: check PS1, no escape code if not interactive....?
+	echo -e "\e[00;31m> $*\e[00m"
+}
+
 if [ `whoami` != root ]; then
-	echo Run as root
+	WARNING Run as root
 	exit
 fi
 
@@ -47,15 +52,19 @@ echo
 echo
 
 
-
 # check dependencies
 if ! which mksquashfs &> /dev/null; then
-	echo '> Error! required squashfs-tools package is not installed'
+	WARNING 'Error! required squashfs-tools package is not installed'
 	exit
 fi
 
 if ! which mkisofs &> /dev/null; then
-	echo '> Error! required genisoimage package is not installed'
+	WARNING 'Error! required genisoimage package is not installed'
+	exit
+fi
+
+if [ $(uname -m) != x86_64 ]; then
+	WARNING 'Error! x86_64 architecture required.'
 	exit
 fi
 
