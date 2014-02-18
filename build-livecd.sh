@@ -175,9 +175,14 @@ EOF
 # CD is limited. A classic example is downloaded package files, which can be
 # cleaned out using:
 #INSIDE aptitude clean
-INSIDE apt-get upgrade # just in case it's not already done
-INSIDE apt-get clean
-INSIDE apt-get autoremove
+
+# New kernel?
+#cp build/root/boot/vmlinuz-2.6.15-26-k7    build/extract/casper/vmlinuz
+#cp build/root/boot/initrd.img-2.6.15-26-k7 build/extract/casper/initrd.gz
+
+yes | INSIDE apt-get upgrade # just in case it's not already done
+yes | INSIDE apt-get clean
+yes | INSIDE apt-get autoremove
 
 #BREAKPOINT
 
