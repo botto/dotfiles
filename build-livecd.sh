@@ -15,7 +15,7 @@
 #aptitude install squashfs-tools genisoimage
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
-NAME="darkbuntu-$BRANCH.iso"
+NAME="darkbuntu-$BRANCH"
 
 UBUNTU_ISO_URL='http://www.ubuntu.com/start-download?distro=desktop&bits=64&release=latest'
 SOURCE='ubuntu-13.10-desktop-amd64.iso'
@@ -193,7 +193,7 @@ yes | INSIDE apt-get upgrade # just in case it's not already done
 yes | INSIDE apt-get clean
 yes | INSIDE apt-get autoremove
 
-BREAKPOINT
+#BREAKPOINT
 
 rm -rf build/root/tmp/*
 rm     build/root/.bash_history
