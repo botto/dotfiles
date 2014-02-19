@@ -15,11 +15,11 @@
 #aptitude install squashfs-tools genisoimage
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
-
+NAME="darkbuntu-$BRANCH.iso"
 
 UBUNTU_ISO_URL='http://www.ubuntu.com/start-download?distro=desktop&bits=64&release=latest'
 SOURCE='ubuntu-13.10-desktop-amd64.iso'
-TARGET="darkbuntu-$BRANCH.iso"
+TARGET="$NAME.iso"
 
 # TODO: sort out what happens when not run in this dir
 
@@ -53,13 +53,8 @@ echo
 
 
 # check dependencies
-if ! which mksquashfs &> /dev/null; then
-	WARNING 'Error! required squashfs-tools package is not installed'
-	exit
-fi
-
-if ! which mkisofs &> /dev/null; then
-	WARNING 'Error! required genisoimage package is not installed'
+if ! which mkisofs mksquashfs &> /dev/null; then
+	WARNING 'Error! required genisoimage and/or squashfs-tools package(s) are not installed'
 	exit
 fi
 
@@ -188,21 +183,23 @@ EOF
 # New kernel?
 #cp build/root/boot/vmlinuz-2.6.15-26-k7    build/extract/casper/vmlinuz
 #cp build/root/boot/initrd.img-2.6.15-26-k7 build/extract/casper/initrd.gz
+# After you've modified the kernel, init scripts or added new kernel
+# modules, you need to rebuild the initrd.gz file and substitute it into
+# the casper directory.
+#INSIDE mkinitramfs -o /initrd.gz 2.6.15-26-k7
+#mv edit/initrd.gz extract-cd/casper/
 
 yes | INSIDE apt-get upgrade # just in case it's not already done
 yes | INSIDE apt-get clean
 yes | INSIDE apt-get autoremove
 
-#BREAKPOINT
+BREAKPOINT
 
 rm -rf build/root/tmp/*
 rm     build/root/.bash_history
 
 rm build/root/etc/hosts
 rm build/root/etc/resolv.conf
-
-# then network manager can overwrite it
-touch build/root/etc/resolv.conf
 
 # Clean after installing software
 rm build/root/var/lib/dbus/machine-id
@@ -256,7 +253,7 @@ echo 'Calculating hashes...'
 )
 
 # Create the ISO image
-mkisofs -D -r -V "Darkbuntu" -cache-inodes -J -l \
+mkisofs -D -r -V "$NAME" -cache-inodes -J -l \
 	-b isolinux/isolinux.bin \
 	-c isolinux/boot.cat \
 	-no-emul-boot -boot-load-size 4 \

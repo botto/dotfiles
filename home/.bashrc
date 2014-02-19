@@ -48,7 +48,7 @@ export GCC_COLORS=1
 
 # this bashrc takes a sec or so thanks to all the completions, so print this first
 # Now this doesn't matter thanks to the deferred() system
-echo -ne "\n\033[37m> Welcome to $HOSTNAME, $USER.\033[0m "
+echo -ne "\n\033[37m> Welcome to $HOSTNAME, $USER!\033[0m "
 
 # AUTOMATIC TMUX
 # must not launch tmux inside tmux (no memes please)
