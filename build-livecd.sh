@@ -116,8 +116,10 @@ unsquashfs -no-progress -d build/root build/mnt/casper/filesystem.squashfs
 
 # Prepare and chroot
 # network connection within chroot
-cp /etc/resolv.conf build/root/etc/
-cp /etc/hosts       build/root/etc/
+# Don't replace resolv.conf, overwrite it so that permissions don't change.
+# This way, network manager can still work.
+cat /etc/resolv.conf > build/root/etc/
+cat /etc/hosts       > build/root/etc/
 
 # other filesystems, inside chroot
 # these mount important directories of your host system - if you later decide to
@@ -199,7 +201,7 @@ rm -rf build/root/tmp/*
 rm     build/root/.bash_history
 
 rm build/root/etc/hosts
-rm build/root/etc/resolv.conf
+echo > build/root/etc/resolv.conf
 
 # Clean after installing software
 rm build/root/var/lib/dbus/machine-id
