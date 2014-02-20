@@ -41,7 +41,9 @@ fi
 
 if [ -f "$TARGET" ]; then
 	SOURCE="$TARGET"
+	echo 'Incremental build'
 elif [ ! -f "$SOURCE" ]; then
+	echo 'Downloading initial ISO'
 	wget "$UBUNTU_ISO_URL" -O "$SOURCE" || exit 2
 fi
 
@@ -142,10 +144,6 @@ INSIDE add-apt-repository multiverse
 
 INSIDE ln -s /lib/init/upstart-job /etc/init.d/whoopsie # required, otherwise apt breaks
 
-# Utterly stupid hack required to fix keyboard map for X on livecd.
-sed -i -re "s/'en': *'us',/'en': 'gb',/g" \
-	build/root/usr/lib/ubiquity/ubiquity/misc.py
-
 yes | INSIDE apt-get update
 yes | INSIDE apt-get install git
 
@@ -195,12 +193,19 @@ yes | INSIDE apt-get upgrade # just in case it's not already done
 yes | INSIDE apt-get clean
 yes | INSIDE apt-get autoremove
 
+# Utterly stupid hack required to fix keyboard map for X on livecd.
+# must be done last, otherwise clobbered by ubiquity update.
+sed -i -re "s/'en': *'us',/'en': 'gb',/g" \
+	build/root/usr/lib/ubiquity/ubiquity/misc.py
+
+
 #BREAKPOINT
 
 rm -rf build/root/tmp/*
 rm     build/root/.bash_history
 
 rm build/root/etc/hosts
+# overwrite, preserve permissions, see above.
 echo > build/root/etc/resolv.conf
 
 # Clean after installing software
@@ -265,9 +270,6 @@ mkisofs -D -r -V "$NAME" -cache-inodes -J -l \
 # clean, MUST MAKE SURE EVERYTHING IS UNMOUNTED FIRST, PARTICULARLY /dev
 rm -rf build/*
 
-# yay git
-#touch build/.empty
-
 # postprocess to allow simple dd to flash drive to work?
 # isohybrid
 # http://manpages.ubuntu.com/manpages/natty/man1/isohybrid.1.html
@@ -277,4 +279,20 @@ rm -rf build/*
 
 # could order files to reduce seeking time. But not normally used from CD any more.
 # http://lichota.net/~krzysiek/projects/kubuntu/dapper-livecd-optimization/
+
+# To virtualise and test:
+
+#sudo apt-get install qemu kvm
+#sudo adduser naggie kvm
+#qemu-system-x86_64 -m 1024 -usbdevice tablet -k en-gb -vnc :0,lossy -cdrom darkbuntu-naggie.iso
+#
+# After this, on an intermediate host
+#
+# forward port 5900, which is :0
+#ssh -g -L 5900:localhost:5900 naggie@chell.darksky.io
+#
+#
+# Then connect using a vncviewer. Performance is pretty much as if it was
+# local due to kvm and vnc. The letdown is really the fancy effects making
+# it slow.
 

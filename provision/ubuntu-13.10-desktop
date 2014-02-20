@@ -36,8 +36,8 @@ yes | apt-get install broadcom-sta-common
 # fish default shell
 useradd -D -s /usr/bin/fish
 
-yes | INSIDE apt-get remove --purge 'libreoffice*'
-yes | INSIDE apt-get upgrade
+yes | apt-get remove --purge 'libreoffice*'
+yes | apt-get upgrade
 
 # orphaned packages
 yes | apt-get autoremove
