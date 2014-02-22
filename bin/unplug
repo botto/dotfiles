@@ -3,11 +3,11 @@
 # good for livecd
 
 # flush rw cache
-sync
+sudo sync
 
 # unmount all in mtab, mount read-only if failed, force
-umount -a -r -f
+sudo umount -a -r -f
 
 # turn off immediately
-poweroff --force
+sudo poweroff --force
 
