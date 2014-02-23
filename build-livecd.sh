@@ -193,13 +193,10 @@ yes | INSIDE apt-get upgrade # just in case it's not already done
 yes | INSIDE apt-get clean
 yes | INSIDE apt-get autoremove
 
-# Utterly stupid hack required to fix keyboard map for X on livecd.
+# Utterly stupid hack required to fix keyboard map for installer on livecd.
 # must be done last, otherwise clobbered by ubiquity update.
 sed -i -re "s/'en': *'us',/'en': 'gb',/g" \
 	build/root/usr/lib/ubiquity/ubiquity/misc.py
-
-
-#BREAKPOINT
 
 rm -rf build/root/tmp/*
 rm     build/root/.bash_history

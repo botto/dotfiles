@@ -2,3 +2,11 @@
 ! Disable silly caps lock key
 ! Fedora 8 at least, explicitly prompts you whether you want to load ~/.Xmodmap
 clear Lock
+
+! keyboard layout, can also set with stxkbmap gb, or modifying /etc/defaults/keyboard
+! I think this is like a patch to xorg.conf, and works on the livecd
+Section "InputDevice"
+	Identifier "keyboard0"
+	Driver "keyboard"
+	Option "XkbLayout" "gb"
+EndSection
