@@ -5,6 +5,9 @@ if [ `whoami` != root ]; then
 	exit
 fi
 
+# echo commands to aid debugging
+set -x
+
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 # debian/ubuntu
 apt-get update || exit 2
@@ -23,7 +26,7 @@ yes | apt-get install picocom vim vim-gtk git ssh tmux figlet build-essential \
 yes | apt-get install chromium-browser vlc
 yes | apt-get remove --purge firefox
 
-add-apt-repository ppa:team-xbmc/ppa
+yes | add-apt-repository ppa:team-xbmc/ppa
 apt-get update
 yes | apt-get install xbmc
 
@@ -31,7 +34,11 @@ yes | apt-get install xbmc
 yes | apt-get -f install
 
 # BCRM wifi
+# https://help.ubuntu.com/community/WifiDocs/Driver/bcm43xx
 yes | apt-get install broadcom-sta-common
+yes | apt-get --reinstall install bcmwl-kernel-source
+# /etc/modules -> wl ?
+# update initramfs?
 
 # fish default shell
 useradd -D -s /usr/bin/fish

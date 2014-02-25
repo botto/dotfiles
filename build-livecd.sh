@@ -1,18 +1,18 @@
 #!/bin/bash
 
-# Builds darksky ubuntu (naggie/dotfiles based) which is a custom live CD.
+# Builds darksky ubuntu (naggie/dotfiles based) which is a remastered live CD.
 # See example grub.cfg in etc/ to boot from a flash drive.
 # Uses current branch.
 
 # Incremental approach, using an existing ISO.
 
 # Use the 'toram' kernel parameter. The result is a super-fast, disposable
-# environment!
+# environment! You'll need at least 3GB of RAM though.
 #
 # Based on https://help.ubuntu.com/community/LiveCDCustomization
 
 # Install pre-requisities
-#aptitude install squashfs-tools genisoimage
+#sudo apt-get install squashfs-tools genisoimage
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 NAME="darkbuntu-$BRANCH"
@@ -160,17 +160,10 @@ yes | INSIDE apt-get install git
 # absolute references which break if you move the git folder on old versions of
 # git...
 #rsync -r --exclude=build --exclude='*iso' "$DOTFILES_DIR" build/root/root/dotfiles
-INSIDE /bin/bash -x <<EOF
-	git clone git://github.com/naggie/dotfiles.git
-	cd dotfiles
-	git checkout $BRANCH
-	cd provision
-	yes | ./ubuntu-13.10-desktop
-	cd ..
-	./install.sh
-	cd ..
-EOF
-
+# TODO try this instead
+INSIDE git clone -b $BRANCH git://github.com/naggie/dotfiles.git /root/dotfiles
+INSIDE /root/dotfiles/provision/ubuntu-13.10-desktop
+INSIDE /root/dotfiles/install.sh
 
 # edit variables in /etc/casper.conf for distro/host/username
 
@@ -180,21 +173,28 @@ EOF
 # cleaned out using:
 #INSIDE aptitude clean
 
-# New kernel?
+yes | INSIDE apt-get upgrade # just in case it's not already done
+yes | INSIDE apt-get clean
+yes | INSIDE apt-get autoremove
+
+# New kernel or initrd?
 #cp build/root/boot/vmlinuz-2.6.15-26-k7    build/extract/casper/vmlinuz
-#cp build/root/boot/initrd.img-2.6.15-26-k7 build/extract/casper/initrd.gz
+# new initrd generated when Broadcom sta drivers were installed.
+cp build/root/boot/initrd.img* build/extract/casper/initrd.lz
 # After you've modified the kernel, init scripts or added new kernel
 # modules, you need to rebuild the initrd.gz file and substitute it into
 # the casper directory.
 #INSIDE mkinitramfs -o /initrd.gz 2.6.15-26-k7
 #mv edit/initrd.gz extract-cd/casper/
 
-yes | INSIDE apt-get upgrade # just in case it's not already done
-yes | INSIDE apt-get clean
-yes | INSIDE apt-get autoremove
+
+#BREAKPOINT
 
 # Utterly stupid hack required to fix keyboard map for installer on livecd.
 # must be done last, otherwise clobbered by ubiquity update.
+# .Xmodmap is used for live session. /etc/default/keyboard is the debian
+# X/console keyboard main config file. `setxkbmap gb` would also work in
+# session.
 sed -i -re "s/'en': *'us',/'en': 'gb',/g" \
 	build/root/usr/lib/ubiquity/ubiquity/misc.py
 
@@ -227,7 +227,7 @@ cp build/extract/casper/filesystem.manifest build/extract/casper/filesystem.mani
 sed -i '/ubiquity/d' build/extract/casper/filesystem.manifest-desktop
 sed -i '/casper/d'   build/extract/casper/filesystem.manifest-desktop
 
-# Compress filesystem
+# COMPRESS FILESYSTEM
 # already excluded by rsync
 #rm build/extract/casper/filesystem.squashfs
 
@@ -264,17 +264,24 @@ mkisofs -D -r -V "$NAME" -cache-inodes -J -l \
 	-boot-info-table \
 	-o "$TARGET" build/extract/
 
-# clean, MUST MAKE SURE EVERYTHING IS UNMOUNTED FIRST, PARTICULARLY /dev
+# clean, MUST MAKE SURE EVERYTHING IS UNMOUNTED FIRST, PARTICULARLY dev
+# OR PREPARE FOR CORE MELTDOWN
 rm -rf build/*
 
-# postprocess to allow simple dd to flash drive to work?
+# TODO? postprocess to allow simple dd to flash drive to work?
 # isohybrid
 # http://manpages.ubuntu.com/manpages/natty/man1/isohybrid.1.html
+
+
+# TODO? modify isolinux so that default is toram (current use case uses grub on
+# flash drive)
+
+# TODO? EFI support for grub2+flash drive, so can boot on mac.
 
 # Example: burn the image to CD with:
 #cdrecord dev=/dev/cdrom ubuntu-9.04-desktop-i386-custom.iso
 
-# could order files to reduce seeking time. But not normally used from CD any more.
+# Could order files to reduce seeking time, but not normally used from CD any more.
 # http://lichota.net/~krzysiek/projects/kubuntu/dapper-livecd-optimization/
 
 # To virtualise and test:

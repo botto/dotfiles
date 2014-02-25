@@ -5,6 +5,8 @@
 
 # Else will install to home dir
 
+cd $(dirname $0)
+
 # quit on error
 #set -e
 CHANGE=$(git rev-list HEAD --count)
@@ -37,8 +39,6 @@ function warning {
 if [ `whoami` == root ]; then
 	HOME=/etc/skel
 fi
-
-cd $(dirname $0)
 
 # just the arguments (cryptic, I know. That's why you should use fish!)
 PRESETS=$@
