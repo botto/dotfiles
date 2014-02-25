@@ -24,7 +24,7 @@ yes | apt-get install picocom vim vim-gtk git ssh tmux figlet build-essential \
 
 # gui
 yes | apt-get install chromium-browser vlc
-yes | apt-get remove --purge firefox
+yes | apt-get remove --purge firefox whoopsie
 
 yes | add-apt-repository ppa:team-xbmc/ppa
 apt-get update
