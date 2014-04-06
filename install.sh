@@ -44,9 +44,9 @@ fi
 PRESETS=$@
 
 # make sure the submodules are fetched
-echo 'Synchronising submodules...'
-git submodule --quiet init || exit 1
-git submodule --quiet update || exit 2
+#echo 'Synchronising submodules...'
+#git submodule --quiet init || exit 1
+#git submodule --quiet update || exit 2
 
 
 echo 'Clobbering...'
@@ -91,14 +91,17 @@ else
 fi
 
 # generate help files (well, tags) for the vim plugins
-if which vim &>/dev/null; then
-	echo 'Generating helptags for vim submodules...'
-	echo 'call pathogen#helptags()|q' | vim -es -n -T dumb
-else
-	warning 'Vim not found! Is your brain functioning correctly?'
-fi
+#if which vim &>/dev/null; then
+#	echo 'Generating helptags for vim submodules...'
+#	echo 'call pathogen#helptags()|q' | vim -es -n -T dumb
+#else
+#	warning 'Vim not found! Is your brain functioning correctly?'
+#fi
 
-echo $VERSION > ~/.naggie-dotfiles-version
+#Not using submodules as we only want vundle once and then let it control itself
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/vundle
+
+echo $VERSION > ~/.botto-dotfiles-version
 
 # in case someone forgot...
 if [ $BRANCH == 'master' ]; then

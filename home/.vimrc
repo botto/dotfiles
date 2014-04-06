@@ -1,12 +1,35 @@
 " vim 7.3+
-set nocompatible
-call pathogen#infect()
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/vundle'k
+
+" Bundles
+Plugin 'tpope/vim-fugitive'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'vim-scripts/trailing-whitespace'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'ap/vim-css-color'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'joonty/vdebug'
+
+filetype plugin indent on
+
 set laststatus=2
 
 " http://tooky.co.uk/2010/04/08/there-was-a-problem-with-the-editor-vi-git-on-mac-os-x.html
 " If this causes vim to exit with non-zero and breaks git on OS X, investigate.
 syntax on
-filetype plugin indent on
 
 "let g:Powerline_symbols = 'fancy'
 
