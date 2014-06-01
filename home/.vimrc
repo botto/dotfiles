@@ -31,8 +31,6 @@ set laststatus=2
 " If this causes vim to exit with non-zero and breaks git on OS X, investigate.
 syntax on
 
-"let g:Powerline_symbols = 'fancy'
-
 set backspace=indent,eol,start
 " make arrow keys wrap lines and whitespace properly
 set whichwrap=b,s,<,>,[,]
@@ -90,10 +88,12 @@ vnoremap > >gv
 nnoremap ; :
 
 " if you want to force yourself to use hjkl, uncomment this:
-"map <up> <nop>
-"map <down> <nop>
-"map <left> <nop>
-"map <right> <nop>
+" Get off my lawn
+" https://github.com/thoughtbot/dotfiles/blob/master/vimrc
+" nnoremap <Left> :echoe "Use h"<CR>
+" nnoremap <Right> :echoe "Use l"<CR>
+" nnoremap <Up> :echoe "Use k"<CR>
+" nnoremap <Down> :echoe "Use j"<CR>
 
 let g:SuperTabNoCompleteAfter = ['^', '\s', '//', '#']
 
@@ -122,6 +122,16 @@ ca Wqa wqa
 ca W w
 ca Q q
 ca q1 q!
+ca 'q q
+ca q; q
+ca qq q
+ca W  w
+ca Q  q
+ca Wqaz wqa
+ca Wqqa wqa
+ca Wqa  wqa
+ca WQa  wqa
+ca WQA  wqa
 
 " <tab> to toggle nerdtree, persistent across all tabs with vim-nerdtree-tabs!
 " or, choose standard NERDtree

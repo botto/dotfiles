@@ -1,3 +1,9 @@
+Put misc things here. For example:
+  * Windows hacks
+  * Reference
+  * Some dependencies
+
+
 
 # com.googlecode.iterm2.plist
 

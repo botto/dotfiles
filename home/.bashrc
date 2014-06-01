@@ -126,26 +126,42 @@ function ssh {
 # make sure the function exists, even if it wasn't included
 # this is overridden later
 function __git_ps1 {
-	exit
+	return
 }
 
-PS1="\n\[\e[0;32m\]\u@\H \[\e[1;34m\]\$PWD\[\e[0;33m\]\$(__git_ps1)\[\e[m\]\n\$ "
+function __p4_ps1 {
+	[ $P4CLIENT ] || return
+	echo -n " ($P4CLIENT) "
+}
+
+function __exit_warn {
+	# test status of last command without affecting it
+	status=$?
+	test $status -ne 0 \
+		&& printf "\n\33[31mExited with status %s\33[m" $status
+}
+
+PS1="\$(__exit_warn)\n\[\e[38;5;75m\]\u@\H:\$PWD\[\e[90m\]\$(__git_ps1)\$(__p4_ps1)\[\e[0m\]\n\$ "
 
 # aliases shared between fish and bash
 source ~/.aliases
 
-# bash specific aliases
-alias tm='test -z $TMUX && (tmux a || tmux)'
-
+# get new or steal existing tmux
+function tm {
+	# must not already be inside tmux
+	test ! $TMUX || return
+	# detach any other clients
+	# attach or make new if there isn't one
+	tmux attach -d || tmux
+}
 
 # slow completion things in background after bashrc is executed
 function deferred {
-	# git completion (maybe other completion too)
+	# linux
 	[ -f /etc/bash_completion ] && source /etc/bash_completion
 
 	# OS X via homebrew git completion via package bash-completion
 	[ -f /usr/local/etc/bash_completion ] && source /usr/local/etc/bash_completion
-
 	# Homebrew completions
 	test -x /usr/local/bin/brew && source `brew --prefix`/Library/Contributions/brew_bash_completion.sh
 
@@ -154,6 +170,10 @@ function deferred {
 
 	# hardcoded ssh completions (known_hosts is encrypted mostly)
 	#complete -o default -W 'example.com example.net' ssh scp ping
+
+	# latest git completion and PS1
+	source ~/.git-completion.sh
+	source ~/.git-prompt.sh
 }
 
 # patches for Mac OS X

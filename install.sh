@@ -48,6 +48,11 @@ PRESETS=$@
 #git submodule --quiet init || exit 1
 #git submodule --quiet update || exit 2
 
+# Garbage collection
+# remove remains of old submodules, scripts, etc
+rm -rf home/.vim/bundle/powerline 2>/dev/null
+rm -f  ~/bin/server-splash.sh     2>/dev/null
+rm -f  ~/git-completion.bash      2>/dev/null
 
 echo 'Clobbering...'
 # clobber vim and fish config (because there are dirs)
@@ -64,7 +69,7 @@ echo 'Copying scripts...'
 cp -a bin ~
 chmod +x ~/bin/*
 
-if [ ! $(tput colors) -eq 256 ]; then
+if [ ! 0$(tput colors 2>/dev/null) -eq 256 ]; then
 	warning "TERM '$TERM' is not a 256 colour type! Please set in terminal emulator. EG: Putty should have putty-256color, xterm should have xterm-256color."
 fi
 
@@ -86,6 +91,8 @@ fi
 if [ -n "$DISPLAY" ] && which xrdb &>/dev/null; then
 	echo 'Merging Xresources...'
 	xrdb -merge ~/.Xresources
+	# kind of forced to put this here. Ubuntu occasionally changes it for absolutely no reason.
+	setxkbmap gb
 else
 	warning "X not configured. Now you can't enjoy the nice urxvt and xterm settings."
 fi

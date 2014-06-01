@@ -30,3 +30,10 @@ xterm*background:      #000000
 ! bold fonts look terrible
 XTerm*boldMode:        false
 URxvt*boldFont:
+
+
+! fonts (installed to ~/.fonts)
+!xterm*faceName:Source Code Pro:antialias=True:pixelsize=12
+! Patched powerline font
+xterm*faceName:        Sauce Code Powerline:antialias=True:pixelsize=12
+URxvt.font:            xft:Sauce Code Powerline:size=12

@@ -1,0 +1,132 @@
+#!/bin/bash
+# DYNAMIC MOTD
+# Run from bashrc, but work as non-invasive as possible
+#  * Silently fail (2>/dev/null)
+#  * Only if $TMUX is not set (equivalent to only new sessions)
+#  * Only automatically launch tmux if one session with no clients
+#  * Any key will cancel the message
+#  * Only enable on remote session
+#  * Wait depending on quote length (too short or long is annoying)
+
+
+# get true dimensions. tput works, but not if fish is parent shell on fish config.
+eval $(resize)
+
+function center {
+	while read; do
+		printf "%*s\n" $(((${#REPLY}+$COLUMNS)/2)) "$REPLY"
+	done
+}
+
+if [ ! "$SSH_CLIENT" ];then
+	echo 'Only enabled on remote sessions ($SSH_CLIENT)' >&2
+	exit 23
+fi
+
+if [ $TMUX ]; then
+	echo 'Refusing to operate inside tmux. A splash for every new pane/window is annoying.' >&2
+	exit 22
+fi
+
+if [ $(uname) != Linux ]; then
+	echo 'Only Linux is supported at the moment' >&2
+	# OSX problems: figlet, sed, read. Not worth it.
+	exit
+fi
+
+if [ $COLUMNS -lt 148 ]; then
+	echo Terminal not wide enough >&2
+	exit 2
+fi
+
+if ! which figlet &>/dev/null; then
+	echo "Install figlet first" >&2
+	exit 127
+fi
+
+# save screen
+tput smcup
+
+# clear screen (AKA reset terminal)
+echo -ne  "\033c"
+
+# hide cursor
+echo -ne "\e[?25l"
+
+# clearing screen sometimes leaves bits of last command, blank it with one line
+# of whitespace
+printf ' %.0s' $(seq 1 $COLUMNS)
+
+PADDING=$(($(($LINES-24))/2))
+
+for i in $(seq 1 $PADDING); do
+	echo
+done
+
+# ascii art hostname
+#hostname -s | tr a-z A-Z | figlet -ctf slant
+#hostname -s | tr a-z A-Z | figlet -ct
+#hostname -s | tr a-z A-Z | figlet -ctf roman
+#hostname -s | tr a-z A-Z | figlet -ctf univers.flf
+#hostname -s | tr a-z A-Z | figlet -Wctf colossal.flf
+#echo BLACKMESA | tr a-z A-Z | figlet -Wctf univers.flf
+#echo BLACKMESA | tr a-z A-Z | figlet -Wctf colossal.flf
+#hostname -s | tr a-z A-Z | figlet -ctf slant
+#hostname -s | tr a-z A-Z | toilet -F border -f future
+#hostname -s | tr a-z A-Z | toilet -F border:crop -f future
+#hostname -s | tr a-z A-Z | figlet -ctf roman
+
+# get a number dependent on hostname, in this case the crc32 (was 75 blue)
+SUM=$(echo $HOSTNAME | cksum | cut -d' ' -f1)
+#SUM=$RANDOM
+# use modulo operator to get remainer from integer division. This restricts the
+# range.  colours: 0-254 (%255), 16-201 are acceptable
+COLOUR=$(( ($SUM % 185) +15 ))
+echo -ne "\033[38;5;${COLOUR}m"
+
+# figlet -t is broken on mac os x. Try -w instead.
+hostname -s | sed 's/.*/\u&/' | figlet -cf ~/.config/figlet/roman.flf -w $COLUMNS
+
+# reset
+echo -ne "\033[0m"
+
+
+# domain name, double spaced. capital, centered
+hostname -d | sed 's/./& /g' | tr a-z A-Z | center
+
+# Always reset terminal, regardless of termination reason
+function CLEANUP_EXIT {
+	# show cursor
+	echo -ne "\e[?25h"
+	# reset terminal
+	echo -ne  "\033c"
+
+	# restore screen
+	tput rmcup
+
+	exit 0
+}
+trap CLEANUP_EXIT EXIT
+
+
+echo
+if [ -r /etc/quotes ]; then
+	echo; echo
+	QUOTE=$(cat /etc/quotes | sort -R | tail -n 1 )
+	echo "$QUOTE" \
+		| sed 's/.*/"&"/g' \
+		| fold -w 76 -s \
+		| center
+
+	# extra pause if there is a quote, per character
+	WAIT=$( echo "${#QUOTE} * 0.02"  | bc -l )
+
+	# timeout or exit straight away
+	read -n1 -t $WAIT && exit
+fi
+
+# wait for up to 1.2 seconds for any key
+# Abortable sleep
+read -n1 -t 1.2
+
+
