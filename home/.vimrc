@@ -20,7 +20,6 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'vim-scripts/trailing-whitespace'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'ap/vim-css-color'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'joonty/vdebug'
 
 filetype plugin indent on
@@ -97,20 +96,22 @@ nnoremap ; :
 
 let g:SuperTabNoCompleteAfter = ['^', '\s', '//', '#']
 
-" 16-color terminal with solarised theme is most accurate
-" failing this, the following option can be set to use a degraded 256 color palette
-let g:solarized_termcolors=256
+if ! empty(globpath(&rtp, 'bundle/vim-colors-solarized/colors/solarized.vim'))
+  " 16-color terminal with solarised theme is most accurate
+  " failing this, the following option can be set to use a degraded 256 color palette
+  let g:solarized_termcolors=256
 
-" I like the degraded color scheme, even on gvim
-let g:solarized_degrade=1
+  " I like the degraded color scheme, even on gvim
+  let g:solarized_degrade=1
 
-" good on crap laptop monitors (yes, not recommended by Mr. Schoonover)
-let g:solarized_contrast="high"
+  " good on crap laptop monitors (yes, not recommended by Mr. Schoonover)
+  let g:solarized_contrast="high"
 
-set background=dark
+  set background=dark
 
-if (&t_Co == 256)
-	colorscheme solarized
+  if (&t_Co == 256)
+    colorscheme solarized
+  endif
 endif
 
 " anti typo (command aliases)

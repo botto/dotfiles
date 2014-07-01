@@ -107,6 +107,7 @@ fi
 
 #Not using submodules as we only want vundle once and then let it control itself
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/vundle
+vim --noplugin -c "colorschem default" +PluginInstall +qall +quit
 
 echo $VERSION > ~/.botto-dotfiles-version
 
