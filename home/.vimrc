@@ -57,6 +57,7 @@ set cursorcolumn
 
 au BufNewFile,BufRead *.json   set filetype=javascript
 au BufNewFile,BufRead *.less   set filetype=css
+au BufNewFile,BufRead *.cls    set filetype=tex
 au BufNewFile,BufRead *.ino    set filetype=c
 au BufNewFile,BufRead *.pde    set filetype=c
 au BufNewFile,BufRead *.md     set filetype=markdown

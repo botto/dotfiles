@@ -23,8 +23,8 @@ if [ ! "$SSH_CLIENT" ];then
 	exit 23
 fi
 
-if [ $TMUX ]; then
-	echo 'Refusing to operate inside tmux. A splash for every new pane/window is annoying.' >&2
+if [ $TMUX ] || [ $STY ]; then
+	echo 'Refusing to operate inside tmux or screen. A splash for every new pane/window is annoying.' >&2
 	exit 22
 fi
 
