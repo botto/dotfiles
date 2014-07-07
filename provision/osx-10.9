@@ -112,7 +112,7 @@ until pkgutil --pkg-info=com.apple.pkg.CLTools_Executables; do
 done
 
 # install homebrew
-test -x /usr/local/bin/brew || ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+test -x /usr/local/bin/brew || ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 
 brew update || exit 2
 brew upgrade
