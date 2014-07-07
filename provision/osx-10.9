@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [ `whoami` == root ]; then
+	echo 'Do not run as root!'
+	exit 5
+fi
+
+
 # initial mac setup
 # A lot of this is from https://github.com/mathiasbynens/dotfiles/blob/master/.osx
 
@@ -102,7 +108,7 @@ xcode-select --install
 
 until pkgutil --pkg-info=com.apple.pkg.CLTools_Executables; do
 	echo 'Waiting for Xcode to be installed by user...'
-	sleep 1
+	sleep 5
 done
 
 # install homebrew
