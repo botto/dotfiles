@@ -217,3 +217,32 @@ noremap! <C-e> <End>
 
 " Press F2 to magically fold everything
 map <F2> :set foldmethod=indent<CR><CR>
+
+map <F3> :Retab<CR><CR>
+map <F4> :!p4 edit %<CR><CR>:w<CR><CR>
+map <F6> :SyntasticCheck<CR><CR>
+map <F7> :FixWhitespace<CR><CR>
+map <F8> :sort<CR><CR>
+" toggle wrap/paste
+map <F9>  :set wrap!<CR><CR>
+map <F10> :set paste!<CR><CR>
+
+" airline is lighter than powerline.
+" Old powerline colours are nice.
+let g:airline_theme='powerlineish'
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+
+" Unsurprisingly, I want to edit dotfiles and simlinks!
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_follow_symlinks = 1
+
+" to bottom if log
+au BufNewFile,BufRead *.log normal G
+
+" abort a merge commit
+ca fail cq
+
+" stop accidentally saving ';' or ':' files due to typo
+" http://stackoverflow.com/questions/6210946/prevent-saving-files-with-certain-names-in-vim
+autocmd BufWritePre [:;]* throw 'Forbidden file name: ' . expand('<afile>')
