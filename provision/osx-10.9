@@ -98,6 +98,13 @@ killall SystemUIServer
 # install xcode and xcode cli tools (large) or xcode cli tools (small)
 # https://developer.apple.com/downloads/index.action
 
+xcode-select --install
+
+until pkgutil --pkg-info=com.apple.pkg.CLTools_Executables; do
+	echo 'Waiting for Xcode to be installed by user...'
+	sleep 1
+done
+
 # install homebrew
 test -x /usr/local/bin/brew || ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
 
@@ -107,12 +114,12 @@ brew upgrade
 # cli apps
 brew install git tmux keychain picocom mcabber htop-osx nodejs autossh \
 	bash-completion gnu-sed coreutils ghostscript ssh-copy-id mpd ncmpcpp fish \
-	python most ctags-exuberant wget tree
+	python most wget tree sox socat netcat nmap p7zip
 
 # gui apps
-#brew tap phinze/homebrew-cask
-#brew install brew-cask
-#brew cask install google-chrome adium arduino bettertouchtool cyberduck gimp iterm2 macvim virtualbox vlc
+brew tap caskroom/cask
+brew install brew-cask
+brew cask install google-chrome adium arduino bettertouchtool cyberduck gimp iterm2 vlc
 
 # iterm2 prefs
 cp ../etc/com.googlecode.iterm2.plist ~/Library/Preferences/
