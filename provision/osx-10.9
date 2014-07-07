@@ -104,7 +104,7 @@ killall SystemUIServer
 # install xcode and xcode cli tools (large) or xcode cli tools (small)
 # https://developer.apple.com/downloads/index.action
 
-xcode-select --install
+pkgutil --pkg-info=com.apple.pkg.CLTools_Executables || xcode-select --install
 
 until pkgutil --pkg-info=com.apple.pkg.CLTools_Executables; do
 	echo 'Waiting for Xcode to be installed by user...'
@@ -135,7 +135,8 @@ if ! grep -q /usr/local/bin/fish /etc/shells; then
 	echo Registering fish shell...
 	echo /usr/local/bin/fish | sudo tee -a /etc/shells
 fi
-chsh -s /usr/local/bin/fish
+
+echo $SHELL | grep -q fish || chsh -s /usr/local/bin/fish
 
 # update completion db from man pages. OMGWOW.
 /usr/local/bin/fish -c fish_update_completions
