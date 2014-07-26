@@ -209,6 +209,7 @@ echo
 COLUMNS=80 ls
 
 echo -e "\n> bash, dotfiles version $(cat ~/.naggie-dotfiles-version)"
+echo '>'$(uptime)
 
 # Disable stupid flow control. Ctrl+S can disable the terminal, requiring
 # Ctrl+Q to restore. It can result in an apparent hung terminal, if
