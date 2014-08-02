@@ -117,3 +117,7 @@ if [ $BRANCH == 'master' ]; then
 elif [ $BRANCH != $USER ]; then
 	warning "Branch does not match user. Sure about this? The convention is to have a custom branch matching your username."
 fi
+
+for pset in $PRESETS; do
+  ./presets/$pset
+done;
