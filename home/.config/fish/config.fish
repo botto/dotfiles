@@ -103,20 +103,8 @@ if test "$PLATFORM" = 'Darwin'
 	# slightly different utf8 locale format...
 	# see `locale -a`
 	set -x LANG 'en_GB.UTF-8'
-end
-
-# patches for Mac OS X
-set PLATFORM (uname)
-if test "$PLATFORM" = 'Darwin'
-	alias ls='ls -G'
-	#unalias ls
-	# unalias is broken...
-	#alias ls=ls
-	set -x CLICOLOR 1
-	set -x LSCOLORS gxBxhxDxfxhxhxhxhxcxcx
-	# slightly different utf8 locale format...
-	# see `locale -a`
-	set -x LANG 'en_GB.UTF-8'
+  # i like the graphical vim
+  alias vim='mvim'
 end
 
 function cd
@@ -188,4 +176,3 @@ end
 
 # initially set title
 fish_set_tmux_title
-
