@@ -208,7 +208,7 @@ echo
 # neat ls with fixed width
 COLUMNS=80 ls
 
-echo -e "\n> bash, dotfiles version $(cat ~/.naggie-dotfiles-version)"
+echo -e "\n> bash, dotfiles version $(cat ~/.botto-dotfiles-version)"
 echo '>'$(uptime)
 
 # Disable stupid flow control. Ctrl+S can disable the terminal, requiring
