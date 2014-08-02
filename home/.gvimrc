@@ -6,6 +6,17 @@ if has('win32')
 	set gfn=Consolas:h10:cANSI
 elseif has('mac')
 	set gfn=Menlo:h12:cANSI
+  set guioptions=aAce
+  set fuoptions=maxvert,maxhorz
+  set noballooneval
+  set fu
+
+  " resize current buffer by +/- 5
+  nnoremap <M-Right> :vertical resize +5<CR>
+  nnoremap <M-Left>  :vertical resize -5<CR>
+  nnoremap <M-Up>    :resize -5<CR>
+  nnoremap <M-Down>  :resize +5<CR>
+  let g:solarized_degrade=1
 elseif has('unix')
 	" Set the menutoolbar on gvim linux, otherwise pasting from X is a
 	" pain

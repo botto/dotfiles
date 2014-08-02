@@ -21,8 +21,21 @@ Plugin 'vim-scripts/trailing-whitespace'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'ap/vim-css-color'
 Plugin 'joonty/vdebug'
+Plugin 'ervandew/supertab'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'bling/vim-airline'
+Plugin 'kien/ctrlp.vim'
+Plugin 'taglist.vim'
+Plugin 'genoma/vim-less'
 
 filetype plugin indent on
+
+syntax on
+
+
+"" It's not the 70's anymore. Use git or something.
+set noswapfile
+set nobackup
 
 set laststatus=2
 
@@ -34,9 +47,24 @@ set backspace=indent,eol,start
 " make arrow keys wrap lines and whitespace properly
 set whichwrap=b,s,<,>,[,]
 set number
-set ic
 set smartcase
 set autoindent
+set smartindent
+set expandtab
+set smarttab
+
+" Two spaces for life
+set shiftwidth=2
+set tabstop=2
+
+" Lets kill those bells
+set noerrorbells
+set novisualbell
+set t_vb=
+autocmd! GUIEnter * set vb t_vb=
+
+" Search
+set ic
 set incsearch
 
 " no wrapping by default. Use `:set wrap` to re-enable
@@ -55,20 +83,22 @@ set cursorline
 " ...and column. Good for lining up and feeling like a pro hacker.
 set cursorcolumn
 
-au BufNewFile,BufRead *.json   set filetype=javascript
-au BufNewFile,BufRead *.less   set filetype=css
-au BufNewFile,BufRead *.cls    set filetype=tex
-au BufNewFile,BufRead *.ino    set filetype=c
-au BufNewFile,BufRead *.pde    set filetype=c
-au BufNewFile,BufRead *.md     set filetype=markdown
-au BufNewFile,BufRead *.fish   set filetype=sh
-au BufNewFile,BufRead *.fdc    set filetype=sdc
-au BufNewFile,BufRead .aliases set filetype=sh
-au BufNewFile,BufRead .bcrc    set filetype=bc
+au BufNewFile,BufRead *.json    set filetype=javascript
+au BufNewFile,BufRead *.less    set filetype=css
+au BufNewFile,BufRead *.cls     set filetype=tex
+au BufNewFile,BufRead *.ino     set filetype=c
+au BufNewFile,BufRead *.pde     set filetype=c
+au BufNewFile,BufRead *.md      set filetype=markdown
+au BufNewFile,BufRead *.fish    set filetype=sh
+au BufNewFile,BufRead *.fdc     set filetype=sdc
+au BufNewFile,BufRead .aliases  set filetype=sh
+au BufNewFile,BufRead .bcrc     set filetype=bc
+" Drupal files are 80 cols wide only
+au BufNewFile,BufRead *.install set filetype=php, set colorcolumn=80
+au BufNewFile,BufRead *.module  set filetype=php, set colorcolumn=80
+au BufNewFile,BufRead *.theme   set filetype=php, set colorcolumn=80
+au BufNewFile,BufRead *.test    set filetype=php, set colorcolumn=80
 
-" It's not the 70's anymore. Use git or something.
-set noswapfile
-set nobackup
 
 " get rid of the engulfing behavior of highlighting matching brackets
 " when inside parenthesis. It makes the cursor hard to distinguish.
@@ -90,13 +120,14 @@ nnoremap ; :
 " if you want to force yourself to use hjkl, uncomment this:
 " Get off my lawn
 " https://github.com/thoughtbot/dotfiles/blob/master/vimrc
-" nnoremap <Left> :echoe "Use h"<CR>
-" nnoremap <Right> :echoe "Use l"<CR>
-" nnoremap <Up> :echoe "Use k"<CR>
-" nnoremap <Down> :echoe "Use j"<CR>
+nnoremap <Left> :echoe "Use h"<CR>
+nnoremap <Right> :echoe "Use l"<CR>
+nnoremap <Up> :echoe "Use k"<CR>
+nnoremap <Down> :echoe "Use j"<CR>
 
 let g:SuperTabNoCompleteAfter = ['^', '\s', '//', '#']
 
+" This is so that we can automate the vundle install
 if ! empty(globpath(&rtp, 'bundle/vim-colors-solarized/colors/solarized.vim'))
   " 16-color terminal with solarised theme is most accurate
   " failing this, the following option can be set to use a degraded 256 color palette
@@ -151,7 +182,7 @@ nnoremap gF <C-w>gf
 " Ex mode? WTF VIM?
 map Q <Nop>
 
-" macros are extremely useful in rare cases, best not to disable
+" Nope, never use macros...plugins anyone?
 "map q <Nop>
 
 " re-flow entire paragraph
@@ -205,16 +236,6 @@ map <C-e> <End>
 noremap! <C-a> <Home>
 noremap! <C-e> <End>
 
-" 4 spaces for tabs, inserted automatically.
-" Tabs work fine in an ideal world. Sadly, spaces are always more consistent.
-" To refactor code: find ./ -type f -exec sed -i 's/\t/    /g' {} \;
-"set shiftwidth=4
-"set expandtab
-
-" Tabs (actual tabs) to be 4-wide. MOAR CODE ON SCREEN. Sorry, Linus. (block
-" indent broken)
-"set tabstop=4
-
 " Press F2 to magically fold everything
 map <F2> :set foldmethod=indent<CR><CR>
 
@@ -246,3 +267,9 @@ ca fail cq
 " stop accidentally saving ';' or ':' files due to typo
 " http://stackoverflow.com/questions/6210946/prevent-saving-files-with-certain-names-in-vim
 autocmd BufWritePre [:;]* throw 'Forbidden file name: ' . expand('<afile>')
+
+" set vdebug to local
+let g:vdebug_options = {
+      \'server': '0.0.0.0'
+      \}
+
