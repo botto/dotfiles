@@ -9,45 +9,41 @@ call vundle#rc()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/vundle'
 
-" Bundles
-Plugin 'tpope/vim-fugitive'
-Plugin 'nanotech/jellybeans.vim'
-Plugin 'Lokaltog/vim-powerline'
-Plugin 'scrooloose/syntastic'
-Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
+" themes
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'nanotech/jellybeans.vim'
+
+" Bundles
+Plugin 'ervandew/supertab'
+Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/trailing-whitespace'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'ap/vim-css-color'
-Plugin 'joonty/vdebug'
-Plugin 'ervandew/supertab'
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'bling/vim-airline'
 Plugin 'kien/ctrlp.vim'
+Plugin 'Lokaltog/powerline-fonts'
+Plugin 'joonty/vdebug'
 Plugin 'taglist.vim'
 Plugin 'genoma/vim-less'
+Plugin 'majutsushi/tagbar'
+
 
 filetype plugin indent on
-
 syntax on
 
-
-"" It's not the 70's anymore. Use git or something.
+" It's not the 70's anymore. Use git or something.
 set noswapfile
 set nobackup
-
-set laststatus=2
-
-" http://tooky.co.uk/2010/04/08/there-was-a-problem-with-the-editor-vi-git-on-mac-os-x.html
-" If this causes vim to exit with non-zero and breaks git on OS X, investigate.
-syntax on
 
 set backspace=indent,eol,start
 " make arrow keys wrap lines and whitespace properly
 set whichwrap=b,s,<,>,[,]
 set number
 set smartcase
+
+" indenting
 set autoindent
 set smartindent
 set expandtab
@@ -94,10 +90,10 @@ au BufNewFile,BufRead *.fdc     set filetype=sdc
 au BufNewFile,BufRead .aliases  set filetype=sh
 au BufNewFile,BufRead .bcrc     set filetype=bc
 " Drupal files are 80 cols wide only
-au BufNewFile,BufRead *.install set filetype=php, set colorcolumn=80
-au BufNewFile,BufRead *.module  set filetype=php, set colorcolumn=80
-au BufNewFile,BufRead *.theme   set filetype=php, set colorcolumn=80
-au BufNewFile,BufRead *.test    set filetype=php, set colorcolumn=80
+au BufNewFile,BufRead *.install set filetype=php colorcolumn=80
+au BufNewFile,BufRead *.module  set filetype=php colorcolumn=80
+au BufNewFile,BufRead *.theme   set filetype=php colorcolumn=80
+au BufNewFile,BufRead *.test    set filetype=php colorcolumn=80
 
 
 " get rid of the engulfing behavior of highlighting matching brackets
@@ -108,7 +104,6 @@ set noshowmatch
 " NoMatchParen " this works as a command but not a setting
 " this does work, fooling the matching system into
 let loaded_matchparen = 1
-
 
 " Reselect visual block after indent/outdent
 vnoremap < <gv
@@ -146,6 +141,8 @@ if ! empty(globpath(&rtp, 'bundle/vim-colors-solarized/colors/solarized.vim'))
   endif
 endif
 
+colorscheme jellybeans
+
 " anti typo (command aliases)
 ca WQ wq
 ca Wq wq
@@ -165,15 +162,6 @@ ca Wqqa wqa
 ca Wqa  wqa
 ca WQa  wqa
 ca WQA  wqa
-
-" <tab> to toggle nerdtree, persistent across all tabs with vim-nerdtree-tabs!
-" or, choose standard NERDtree
-nnoremap <tab> :NERDTreeTabsToggle<CR>
-"nnoremap <tab> :NERDTreeToggle<CR>
-let NERDTreeMapQuit='\t'
-" when changing to a tab, file should be focused
-let g:nerdtree_tabs_focus_on_files=1
-let g:NERDTreeWinSize = 40
 
 " gf opens the file under cursor, which is great for navigating a hierarchy of files.
 " Change gF to open file under cursor in new tab, not new pane, like CTRL+W gF
@@ -195,7 +183,7 @@ nmap Q gqap
 cmap w!! w !sudo tee % >/dev/null
 
 " Enable mouse mode. Use xterm >= 277 for mouse mode for large terms.
-set mouse=a
+"set mouse=a
 
 " abbreviations
 ab teh the
@@ -210,10 +198,6 @@ cabbrev help tab help
 
 " abbreviate messages in every way to avoid hit-enter prompt
 set shortmess=a
-
-" keep window split size emal on resize AWESOME
-" http://stackoverflow.com/questions/14649698/how-to-resize-split-windows-in-vim-proportionally
-autocmd VimResized * :wincmd =
 
 " Enable extended regular expressions by default on search. Also makes it
 " consistent with :%s//g commands.
@@ -272,4 +256,67 @@ autocmd BufWritePre [:;]* throw 'Forbidden file name: ' . expand('<afile>')
 let g:vdebug_options = {
       \'server': '0.0.0.0'
       \}
+
+" Syntax coloring lines that are too long just slows down the world
+" http://superuser.com/questions/302186/vim-scrolls-very-slow-when-a-line-is-too-long
+set synmaxcol=256
+" give the terminal many characters-per-second it it can cope
+set ttyfast
+" only draw on user input
+set lazyredraw
+
+" set up tab as netrw toggle
+nnoremap <tab> :call VexToggle(getcwd())<CR>
+
+let g:netrw_liststyle=0         " thin (change to 3 for tree)
+let g:netrw_banner=0            " no banner
+let g:netrw_altv=1              " open files on right
+let g:netrw_preview=1           " open previews vertically
+
+" netrw functions
+" http://ivanbrennan.nyc/blog/2014/01/16/rigging-vims-netrw/ 
+fun! VexToggle(dir)
+  if exists("t:vex_buf_nr")
+    call VexClose()
+  else
+    call VexOpen(a:dir)
+  endif
+endf
+
+fun! VexOpen(dir)
+  let g:netrw_browse_split=4    " open files in previous window
+  let vex_width = 25
+
+  execute "Vexplore " . a:dir
+  let t:vex_buf_nr = bufnr("%")
+  wincmd H
+
+  call VexSize(vex_width)
+endf
+
+fun! VexClose()
+  let cur_win_nr = winnr()
+  let target_nr = ( cur_win_nr == 1 ? winnr("#") : cur_win_nr )
+
+  1wincmd w
+  close
+  unlet t:vex_buf_nr
+
+  execute (target_nr - 1) . "wincmd w"
+  call NormalizeWidths()
+endf
+
+fun! VexSize(vex_width)
+  execute "vertical resize" . a:vex_width
+  set winfixwidth
+  call NormalizeWidths()
+endf
+
+fun! NormalizeWidths()
+  let eadir_pref = &eadirection
+  set eadirection=hor
+  set equalalways! equalalways!
+  let &eadirection = eadir_pref
+endf
+
 
