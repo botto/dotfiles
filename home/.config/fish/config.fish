@@ -1,12 +1,12 @@
 status --is-interactive; or exit 0
 
-set -x PATH ~/bin /usr/local/bin /usr/local/share/npm/bin $PATH
+set -x PATH ~/bin /usr/local/bin /usr/local/share/npm/bin /usr/bin/core_perl $PATH
 
 # sometimes TMUX can get confused about whether unicode is supported to draw
 # lines or not. tmux may draw x and q instead, or default to - and | which is
 # ascii. This also allows other programs to use nice UTF-8 symbols, such as
 # NERDtree in vim. So very awesome.
-set -x LANG=en_GB.utf8
+set -x LANG en_GB.utf8
 
 # mac bc read the conf file to allow floating point maths
 # and load the standard library
@@ -36,7 +36,7 @@ test ! $TMUX; and ~/bin/server-splash ^/dev/null
 # lines or not. tmux may draw x and q instead, or default to - and | which is
 # ascii. This also allows other programs to use nice UTF-8 symbols, such as
 # NERDtree in vim. So very awesome.
-set -x LANG=en_GB.utf8
+set -x LANG en_GB.utf8
 
 # mac bc read the conf file to allow floating point maths
 # and load the standard library
@@ -176,3 +176,5 @@ end
 
 # initially set title
 fish_set_tmux_title
+
+eval (envoy -fp)
