@@ -61,7 +61,7 @@ test -z $TMUX
 	and tmux attach
 
 # totally worth it
-if not test -d ~/.config/fish/generated_completions/
+if not test -d ~/.local/share/fish/generated_completions/
 	echo "One moment..."
 	fish_update_completions
 end
