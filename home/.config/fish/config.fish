@@ -177,4 +177,7 @@ end
 # initially set title
 fish_set_tmux_title
 
-eval (envoy -fp)
+if test -e ~/.config/fish/os.config.fish
+  source ~/.config/fish/os.config.fish
+end
+

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# From http://stackoverflow.com/a/246128/4985
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cp $DIR/arch_preset_files/os.config.fish ~/.config/fish/os.config.fish
