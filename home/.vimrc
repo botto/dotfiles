@@ -123,25 +123,9 @@ nnoremap <Down> :echoe "Use j"<CR>
 let g:SuperTabNoCompleteAfter = ['^', '\s', '//', '#']
 
 " This is so that we can automate the vundle install
-if ! empty(globpath(&rtp, 'bundle/vim-colors-solarized/colors/solarized.vim'))
-  " 16-color terminal with solarised theme is most accurate
-  " failing this, the following option can be set to use a degraded 256 color palette
-  let g:solarized_termcolors=256
-
-  " I like the degraded color scheme, even on gvim
-  let g:solarized_degrade=1
-
-  " good on crap laptop monitors (yes, not recommended by Mr. Schoonover)
-  let g:solarized_contrast="high"
-
-  set background=dark
-
-  if (&t_Co == 256)
-    colorscheme solarized
-  endif
+if ! empty(globpath(&rtp, 'bundle/jellybeans.vim/colors/jellybeans.vim'))
+  colorscheme jellybeans
 endif
-
-colorscheme jellybeans
 
 " anti typo (command aliases)
 ca WQ wq
