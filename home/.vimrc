@@ -14,21 +14,25 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'nanotech/jellybeans.vim'
 
 " Bundles
-Plugin 'ervandew/supertab'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/trailing-whitespace'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'ap/vim-css-color'
-Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'jelera/vim-javascript-syntax'
-Plugin 'bling/vim-airline'
 Plugin 'kien/ctrlp.vim'
 Plugin 'Lokaltog/powerline-fonts'
 Plugin 'joonty/vdebug'
-Plugin 'taglist.vim'
 Plugin 'genoma/vim-less'
 Plugin 'majutsushi/tagbar'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'Valloric/YouCompleteMe'
 
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 filetype plugin indent on
 syntax on
