@@ -25,7 +25,6 @@ Plugin 'joonty/vdebug'
 Plugin 'genoma/vim-less'
 Plugin 'majutsushi/tagbar'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'Valloric/YouCompleteMe'
 
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
