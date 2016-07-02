@@ -128,6 +128,7 @@ let g:SuperTabNoCompleteAfter = ['^', '\s', '//', '#']
 " This is so that we can automate the vundle install
 if ! empty(globpath(&rtp, 'bundle/jellybeans.vim/colors/jellybeans.vim'))
   colorscheme jellybeans
+  set background=light
 endif
 
 " anti typo (command aliases)
@@ -149,6 +150,15 @@ ca Wqqa wqa
 ca Wqa  wqa
 ca WQa  wqa
 ca WQA  wqa
+
+" <tab> to toggle nerdtree, persistent across all tabs with vim-nerdtree-tabs!
+" or, choose standard NERDtree
+nnoremap <tab> :NERDTreeTabsToggle<CR>
+"nnoremap <tab> :NERDTreeToggle<CR>
+let NERDTreeMapQuit='\t'
+" when changing to a tab, file should be focused
+let g:nerdtree_tabs_focus_on_files=1
+let g:NERDTreeWinSize = 40
 
 " gf opens the file under cursor, which is great for navigating a hierarchy of files.
 " Change gF to open file under cursor in new tab, not new pane, like CTRL+W gF
@@ -251,59 +261,4 @@ set synmaxcol=256
 set ttyfast
 " only draw on user input
 set lazyredraw
-
-" set up tab as netrw toggle
-nnoremap <tab> :call VexToggle(getcwd())<CR>
-
-let g:netrw_liststyle=0         " thin (change to 3 for tree)
-let g:netrw_banner=0            " no banner
-let g:netrw_altv=1              " open files on right
-let g:netrw_preview=1           " open previews vertically
-
-" netrw functions
-" http://ivanbrennan.nyc/blog/2014/01/16/rigging-vims-netrw/ 
-fun! VexToggle(dir)
-  if exists("t:vex_buf_nr")
-    call VexClose()
-  else
-    call VexOpen(a:dir)
-  endif
-endf
-
-fun! VexOpen(dir)
-  let g:netrw_browse_split=4    " open files in previous window
-  let vex_width = 25
-
-  execute "Vexplore " . a:dir
-  let t:vex_buf_nr = bufnr("%")
-  wincmd H
-
-  call VexSize(vex_width)
-endf
-
-fun! VexClose()
-  let cur_win_nr = winnr()
-  let target_nr = ( cur_win_nr == 1 ? winnr("#") : cur_win_nr )
-
-  1wincmd w
-  close
-  unlet t:vex_buf_nr
-
-  execute (target_nr - 1) . "wincmd w"
-  call NormalizeWidths()
-endf
-
-fun! VexSize(vex_width)
-  execute "vertical resize" . a:vex_width
-  set winfixwidth
-  call NormalizeWidths()
-endf
-
-fun! NormalizeWidths()
-  let eadir_pref = &eadirection
-  set eadirection=hor
-  set equalalways! equalalways!
-  let &eadirection = eadir_pref
-endf
-
 
